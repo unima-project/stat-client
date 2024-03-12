@@ -3,6 +3,40 @@ import axios from "axios";
 // const baseUrl = "https://stat-app-dot-stat-415110.et.r.appspot.com";
 const baseUrl = "http://localhost:5000";
 
+export const GetCorpusList = async (auth) => {
+    try {
+        const {data} = await axios.get(baseUrl + '/corpuses', {
+            headers: {
+                Authorization: `Bearer ${auth}`
+            }
+        })
+        return data
+    } catch (error) {
+        throw error.response.data.message;
+    }
+}
+export const AuthLogin = async (auth) => {
+    try {
+        const {data} = await axios.post(baseUrl + '/auth/login', auth)
+        return data
+    } catch (error) {
+        throw error.response.data.message;
+    }
+}
+
+export const AuthLogout = async (auth) => {
+    try {
+        const {data} = await axios.get(baseUrl + '/auth/logout', {
+            headers: {
+                Authorization: `Bearer ${auth}`
+            }
+        })
+        return data
+    } catch (error) {
+        throw error.response.data.message;
+    }
+}
+
 export const GetCollocationList = async (tokens) => {
     try {
         const {data} = await axios.post(baseUrl + '/nltk/collocates', {
@@ -11,7 +45,7 @@ export const GetCollocationList = async (tokens) => {
 
         return data
     } catch (error) {
-        throw error.response.data.message
+        throw error.response.data.message;
     }
 };
 
@@ -23,7 +57,7 @@ export const GetTokenList = async (text) => {
 
         return data
     } catch (error) {
-        throw error.response.data.message
+        throw error.response.data.message;
     }
 }
 
@@ -35,7 +69,7 @@ export const GetTokenListUpload = async (formData) => {
 
         return data
     } catch (error) {
-        throw error.response.data.message
+        throw error.response.data.message;
     }
 }
 
@@ -48,7 +82,7 @@ export const GetConcordanceList = async (tokens, width) => {
 
         return data
     } catch (error) {
-        throw error.response.data.message
+        throw error.response.data.message;
     }
 };
 
@@ -60,7 +94,7 @@ export const GetWordFreqList = async (tokens) => {
 
         return data
     } catch (error) {
-        throw error.response.data.message
+        throw error.response.data.message;
     }
 };
 
@@ -73,6 +107,6 @@ export const GetNgramList = async (tokens, size) => {
 
         return data
     } catch (error) {
-        throw error.response.data.message
+        throw error.response.data.message;
     }
 };

@@ -4,9 +4,6 @@ import {DataGrid} from '@mui/x-data-grid';
 import Box from '@mui/system/Box'
 import FormControl from "@mui/material/FormControl";
 import {Stack} from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 
 const columns = [
