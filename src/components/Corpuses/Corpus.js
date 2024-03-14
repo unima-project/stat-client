@@ -8,34 +8,62 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Box from '@mui/material/Box';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DownloadIcon from '@mui/icons-material/Download';
+import {Button, Stack} from "@mui/material";
+import {useNavigate} from "react-router"
+import {Link} from "react-router-dom";
 
 export const CorpusList = (props) => {
+    const navigate = useNavigate();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = React.useState([]);
 
+    const columns = [
+        {id: 'id', label: 'Id', minWidth: 10},
+        {id: 'corpus_id', label: 'Corpus Id', minWidth: 10},
+        {id: 'text', label: 'Text', minWidth: 50},
+        {id: 'created_at', label: 'Created At', minWidth: 10},
+        {id: 'action', label: '', minWidth: 10},
+    ];
+
 
     React.useEffect(() => {
         setRowData();
-    }, [props.corpusList, rows])
+    }, [props.corpusList])
 
     const setRowData = () => {
         setRows(props.corpusList.map((corpus, index) => {
             return {
-                id: index +1
+                id: index + 1
                 , corpus_id: corpus.id
-                , name: corpus.name
+                , text: corpus.corpus
                 , created_at: corpus.created_at
+                , action: <Stack direction="row" spacing={2}>
+                    <Button
+                        size="small"
+                        variant="outlined"
+                        component="label"
+                        color="error"
+                        onClick={() => props.deleteCurrentCorpus(corpus.id)}
+                    >
+                        <DeleteForeverIcon/>
+                    </Button>
+                    <Link to={"/tools/" + corpus.id}>
+                        <Button
+                            size="small"
+                            variant="outlined"
+                            component="label"
+                            color="primary"
+                        >
+                            <DownloadIcon/>
+                        </Button>
+                    </Link>
+                </Stack>
             }
         }));
     }
-
-    const columns = [
-        {id: 'id', label: 'Id', minWidth: 10},
-        {id: 'corpus_id', label: 'Corpus Id', minWidth: 10},
-        {id: 'name', label: 'Name', minWidth: 170},
-        {id: 'created_at', label: 'Created At', minWidth: 10},
-    ];
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -48,7 +76,6 @@ export const CorpusList = (props) => {
 
     return (
         <Paper sx={{width: '100%', overflow: 'hidden'}}>
-            <Box sx={{textAlign: "center"}}><h1>Corpus List</h1></Box>
             <TableContainer sx={{maxHeight: 440}}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

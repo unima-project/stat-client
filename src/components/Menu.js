@@ -7,16 +7,16 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import AdbIcon from '@mui/icons-material/Adb';
 import {Link, useNavigate} from "react-router-dom";
-import {useCookies} from 'react-cookie';
+import {SetupCookies} from './Helpers/cookie';
 import {AccountCircle} from "@mui/icons-material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {AuthLogout} from "../models";
+import {AuthLogout} from "../models/Auth";
 
 export const MainMenu = () => {
     const navigate = useNavigate();
-    const [cookie, setCookie, removeCookie] = useCookies(['token', 'name']);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const {cookieUserName, cookieUserToken, removeCookie} = SetupCookies();
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -27,7 +27,7 @@ export const MainMenu = () => {
     };
 
     const handleLogout = () => {
-        AuthLogout(cookie.token)
+        AuthLogout(cookieUserToken)
             .then((data) => {
                 removeCookie("token", "");
                 removeCookie("name", "");
@@ -42,6 +42,10 @@ export const MainMenu = () => {
         navigate("/corpuses")
     }
 
+    const handleProfile = () => {
+        navigate("/users/profile")
+    }
+
     const settings = [
         {
             key: "Corpus"
@@ -49,7 +53,7 @@ export const MainMenu = () => {
         },
         {
             key: "Profile"
-            , func: ""
+            , func: handleProfile
         },
         {
             key: "Setting"
@@ -95,14 +99,14 @@ export const MainMenu = () => {
                     </Box>
 
                     {
-                        (cookie.token || cookie.token === "") ?
+                        (cookieUserToken || cookieUserToken) ?
                             <div>
                                 <Button
                                     sx={{color: 'white', my: 2}}
                                     endIcon={<AccountCircle/>}
                                     onClick={handleOpenUserMenu}
                                 >
-                                    {cookie.name}
+                                    {cookieUserName}
                                 </Button>
                                 <Menu
                                     sx={{mt: '45px'}}

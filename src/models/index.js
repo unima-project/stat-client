@@ -1,41 +1,8 @@
 import axios from "axios";
 
 // const baseUrl = "https://stat-app-dot-stat-415110.et.r.appspot.com";
-const baseUrl = "http://localhost:5000";
+export const baseUrl = "http://localhost:5000";
 
-export const GetCorpusList = async (auth) => {
-    try {
-        const {data} = await axios.get(baseUrl + '/corpuses', {
-            headers: {
-                Authorization: `Bearer ${auth}`
-            }
-        })
-        return data
-    } catch (error) {
-        throw error.response.data.message;
-    }
-}
-export const AuthLogin = async (auth) => {
-    try {
-        const {data} = await axios.post(baseUrl + '/auth/login', auth)
-        return data
-    } catch (error) {
-        throw error.response.data.message;
-    }
-}
-
-export const AuthLogout = async (auth) => {
-    try {
-        const {data} = await axios.get(baseUrl + '/auth/logout', {
-            headers: {
-                Authorization: `Bearer ${auth}`
-            }
-        })
-        return data
-    } catch (error) {
-        throw error.response.data.message;
-    }
-}
 
 export const GetCollocationList = async (tokens) => {
     try {

@@ -1,24 +1,26 @@
 import * as React from 'react';
 import Box from "@mui/system/Box";
-import {AuthLogin} from "../../models";
-import {AlertNotification} from "./alert";
+import {AuthLogin} from "../../models/Auth";
+import {AlertNotification} from "../Alert";
 import {useNavigate} from "react-router-dom";
-import {useCookies} from 'react-cookie';
 import {LoginForm} from "./Login";
+import {alertSeverity} from "../Alert";
+import {SetupCookies} from "../Helpers/cookie";
 
 export const Login = (props) => {
     const navigate = useNavigate();
     const [auth, setAuth] = React.useState({
-        email: ""
-        , password: ""
+        email: "", password: ""
     });
-    const [alertMessage, setAlertMessage] = React.useState("");
-    const [cookie, setCookie] = useCookies(['token', 'name']);
+    const [alertStatus, setAlertStatus] = React.useState({
+        message: "", severity: alertSeverity.INFO
+    });
+    const {cookieUserToken, setCookie} = SetupCookies();
 
 
     React.useEffect(() => {
-        if (cookie.token) navigate("/");
-    }, [cookie.token])
+        if (cookieUserToken) navigate("/");
+    }, [cookieUserToken])
 
     const handleChange = (event) => {
         setAuth({
@@ -31,12 +33,23 @@ export const Login = (props) => {
         event.preventDefault();
         AuthLogin(auth)
             .then((data) => {
-                setCookie('token', data.data.token);
-                setCookie('name', data.data.name);
+                const date = new Date();
+                const expiresDate = new Date(date.getTime() + (60 * 60 * 1000));
+                const options = {
+                    path: '/',
+                    expires: expiresDate,
+                }
+
+                setCookie('token', data.data.token, options);
+                setCookie('name', data.data.name, options);
+
                 navigate("/");
             })
             .catch(error => {
-                setAlertMessage(error);
+                setAlertStatus({
+                    severity: alertSeverity.ERROR
+                    , message: `${error}`
+                })
             })
     }
 
@@ -50,9 +63,9 @@ export const Login = (props) => {
             , marginRight: 45
         }}>
             {
-                cookie.token ?
+                cookieUserToken ?
                     <></> : <>
-                        <AlertNotification alertMessage={alertMessage} setAlertMessage={setAlertMessage}/>
+                        <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>
                         <LoginForm handleSubmit={handleSubmit} handleChange={handleChange} auth={auth}/>
                     </>
             }
