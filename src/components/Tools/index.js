@@ -129,7 +129,7 @@ export const Tool = () => {
                         fontWeight: 700,
                     }}
                 >
-                    {isMemberMemo ?  "Analisis Korpus" : "Daftar Korpus"}
+                    {isMemberMemo ?  "Simple Text Analysis Tool" : "Corpus List"}
                 </Typography>
                 {
                     isMemberMemo ?
