@@ -11,6 +11,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import {Button} from "@mui/material";
 import {SetupCookies} from "../../Helpers/cookie";
 import Box from "@mui/joy/Box";
+import EditorToolbar, { modules, formats } from "./toolbar";
 
 export const AboutEditor = () => {
     const [content, setContent] = useState('');
@@ -32,13 +33,9 @@ export const AboutEditor = () => {
     }, [content])
 
     const addUpdateCallback = React.useCallback((content, token) => {
-        // return about !== undefined
-        //     ? updateAbout(content, token)
-        //     : addAbout(content, token);
-
-        // return addAbout(content, token);
-
-        return updateAbout(content, token);
+        return about !== undefined
+            ? updateAbout(content, token)
+            : addAbout(content, token);
     }, [content])
 
     const getAbout = () => {
@@ -124,23 +121,6 @@ export const AboutEditor = () => {
         });
     }
 
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline','strike', 'blockquote'],
-            [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-            ['link', 'image'],
-            ['clean']
-        ],
-    }
-
-    const formats = [
-            'header',
-            'bold', 'italic', 'underline', 'strike', 'blockquote',
-            'list', 'bullet', 'indent',
-            'link', 'image'
-        ]
-
     const view = <>
         <Grid container sx={{marginTop: 10, width: '100%'}}>
             <Grid container justifyContent={"center"}  sx={{width: '100%'}}>
@@ -162,6 +142,7 @@ export const AboutEditor = () => {
             </Grid>
         </Grid>
         <Box sx={{marginTop: 2, width: '100%'}}>
+            <EditorToolbar />
             <ReactQuill
                 theme="snow"
                 value={contentMemo}
