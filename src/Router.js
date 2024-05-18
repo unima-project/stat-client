@@ -4,6 +4,8 @@ import {ErrorPage} from './components/commons/ErrorPage';
 import {Login} from './components/Auths';
 import {UserProfile} from './components/Users/UserProfile';
 import {User} from './components/Users';
+import {Token} from "./components/Token";
+import {AboutEditor} from "./components/AboutEditor";
 
 const routes = [
     {
@@ -30,6 +32,14 @@ const routes = [
     {
         path: '/corpuses',
         element: <Tool />
+    },
+    {
+        path: '/tokens',
+        element: <Token />
+    },
+    {
+        path: '/about_editor',
+        element: <AboutEditor />
     }
 ];
 

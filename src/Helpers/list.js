@@ -4,6 +4,16 @@ export default class List {
         this.list = list;
     }
 
+    SortAsc = () => {
+        this.list.sort();
+        return this;
+    }
+
+    SortDesc = () => {
+        this.list.reverse();
+        return this;
+    }
+
     RemoveDuplicateItemList = () => {
         let uniqueItems = [];
         this.list.forEach((item) => {

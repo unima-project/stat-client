@@ -12,6 +12,8 @@ import GroupIcon from '@mui/icons-material/Group';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import {Stack} from "@mui/material";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import ListIcon from '@mui/icons-material/List';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 
 export const MenuList = (props) => {
@@ -76,6 +78,14 @@ export const MenuList = (props) => {
         navigate("/corpuses");
     };
 
+    const handleTokens = () => {
+        navigate("/tokens");
+    };
+
+    const handleAboutEditor = () => {
+        navigate("/about_editor");
+    };
+
     const memberSettings = [
         {
             key: "Profile"
@@ -99,6 +109,16 @@ export const MenuList = (props) => {
             key: "Corpuses"
             , func: handleCorpuses
             , icon: <FormatListBulletedIcon/>
+        },
+        {
+            key: "Tokens"
+            , func: handleTokens
+            , icon: <ListIcon/>
+        },
+        {
+            key: "About"
+            , func: handleAboutEditor
+            , icon: <BorderColorIcon/>
         },
     ]
 

@@ -11,6 +11,7 @@ import {GetTokenList, LoadCorpus, LoadPublicCorpus} from "../../models";
 import {SetupCookies} from "../../Helpers/cookie";
 import List from "../../Helpers/list";
 import {CommonContext} from "../../App";
+import {exportTxt} from "../../Helpers/download";
 
 export const Tool = () => {
     const [tokens, setTokens] = React.useState([]);
@@ -78,15 +79,11 @@ export const Tool = () => {
     const exportToken = (tokens) => {
         const uniqueToken = new List(tokens)
             .RemoveDuplicateItemList()
+            .SortAsc()
             .SetNumbering()
+            .list
 
-        const blob = new Blob([uniqueToken.list], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.download = "token.txt";
-        link.href = url;
-        link.click();
+        exportTxt(uniqueToken, "token");
     }
 
     const loadCurrentCorpus = (corpusId, isDownload, userId) => {
@@ -129,7 +126,7 @@ export const Tool = () => {
                         fontWeight: 700,
                     }}
                 >
-                    {isMemberMemo ?  "Simple Text Analysis Tool" : "Corpus List"}
+                    <Box sx={{marginTop: 3}}>{isMemberMemo ?  "Analisis Korpus" : "Daftar Korpus"}</Box>
                 </Typography>
                 {
                     isMemberMemo ?

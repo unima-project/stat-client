@@ -16,6 +16,8 @@ import Select from "@mui/material/Select";
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import {CommonContext} from "../../App";
+import Grid from '@mui/material/Unstable_Grid2';
+import {ExportToken} from "../Token/ExportToken";
 
 const defaultUserList = [{id: 0, name: '--- all user ---'}]
 
@@ -174,8 +176,7 @@ export const Corpus = (props) => {
         GetAllCorpus(event.target.value);
     }
 
-    const selectUser = <Box sx={{maxWidth: 250, textAlign: "left", marginBottom: 3}}>
-        <FormControl fullWidth>
+    const selectUser = <FormControl sx={{minWidth: 175}}>
             <InputLabel>User</InputLabel>
             <Select
                 size={"small"}
@@ -190,10 +191,20 @@ export const Corpus = (props) => {
                 }
             </Select>
         </FormControl>
+
+    const headerComponents = <Box marginBottom={2}>
+        <Grid container>
+            <Grid container sx={{width: '50%'}} justifyContent={"left"}>
+                {isAdmin ? selectUser : <></>}
+            </Grid>
+            <Grid container sx={{width: '50%'}} justifyContent={"flex-end"}>
+                {!isAdmin ? <ExportToken setAlertStatus={setAlertStatus}/> : <></>}
+            </Grid>
+        </Grid>
     </Box>
 
-    return (<Box>
-        {isAdmin ? selectUser : <></>}
+    return (<Grid>
+        {headerComponents}
         <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>
         <CorpusList
             corpusListMemo={corpusListMemo}
@@ -204,5 +215,5 @@ export const Corpus = (props) => {
             updateCurrentCorpus={UpdateCurrentCorpus}
             userLevel={userLevel}
         />
-    </Box>);
+    </Grid>);
 }

@@ -84,7 +84,7 @@ export const UserProfileController = (props) => {
                 size="small"
                 sx={{p:1, minWidth: 200}}
                 variant="contained"
-                color="info"
+                color="error"
                 onClick={openDialogAction}
                 startIcon={<KeyIcon/>}
             >Change Password</Button>
@@ -94,10 +94,10 @@ export const UserProfileController = (props) => {
         <Stack direction="column" spacing={2}>
             <Box>{nameComp}</Box>
             <Grid container rowSpacing={2}>
-                <Grid xs={6}>
+                <Grid xs={6} sx={{width: '50%'}}>
                     {addressComp}
                 </Grid>
-                <Grid xs={6}>
+                <Grid xs={6} sx={{width: '50%'}}>
                     {identityComp}
                 </Grid>
             </Grid>
@@ -106,9 +106,9 @@ export const UserProfileController = (props) => {
     return (
         <Box sx={{p: 5, border: '1px solid'}}>
             <ModalForm dialogAction={dialogAction} />
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack container direction="row" alignItems="center" spacing={2}>
                 <Box>{badgeComp}</Box>
-                <Box>{content}</Box>
+                <Box sx={{width: '100%'}}>{content}</Box>
             </Stack>
         </Box>
     )

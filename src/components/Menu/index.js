@@ -5,7 +5,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from "react-router-dom";
 import {SetupCookies} from '../../Helpers/cookie';
 import {MenuList} from "./MenuList";
@@ -31,7 +30,7 @@ export const MainMenu = () => {
             <Button
                 sx={{my: 2, color: 'white'}}
                 startIcon={<QueryStatsIcon/>}
-            >Analisis Korpus Bahasa Toulour</Button>
+            >Analisis Korpus</Button>
         </Link>
     </>
 
@@ -47,7 +46,6 @@ export const MainMenu = () => {
         <AppBar position="fixed">
             <Container>
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
                     <Typography
                         variant="h6"
                         noWrap
@@ -61,7 +59,7 @@ export const MainMenu = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        ACTOU
+                        {process.env.REACT_APP_TITLE}
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {setupHomeMenu()}

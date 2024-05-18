@@ -1,12 +1,4 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DownloadIcon from '@mui/icons-material/Download';
 import {Button, Stack} from "@mui/material";
@@ -14,48 +6,19 @@ import Switch from "@mui/material/Switch";
 import {corpusPublicStatusConfig, userType} from "../../models";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CorpusConfig from "./Config";
-
-const rowsPerPageOptions = [5, 10, 25, 50];
+import {CommonTable} from "../commons/Table"
 
 export const CorpusList = (props) => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
-    const [rows, setRows] = React.useState([]);
-    const [columns, setColumns] = React.useState([]);
+    const {dataTable, setupColumn, setRows} = CommonTable();
 
     React.useEffect(() => {
         setRowData();
         setupCurrentColumn();
     }, [props.corpusListMemo, props.userLevel])
 
-    const columnsCallback = React.useMemo(() => {
-        return columns
-    }, [columns])
-
     const setupCurrentColumn = () => {
         const config = new CorpusConfig(props.userLevel)
         setupColumn(config.SetColumns().columns);
-    }
-
-    const setupColumn = (cols) => {
-        const columnList = [];
-
-        for (const col in cols) {
-            columnList.push({
-                id: cols[col].id
-                , label: cols[col].label
-                , minWidth: cols[col].minWidth
-                , visible: cols[col].visible
-            })
-        }
-
-        setupVisibleColumns(columnList);
-    }
-
-    const setupVisibleColumns = (columnList) => {
-        setColumns(columnList.filter((column) => {
-            return column.visible === true
-        }))
     }
 
     const handleDeleteCorpus = (corpusId) => {
@@ -75,7 +38,7 @@ export const CorpusList = (props) => {
 
         props.setConfirmationConfig({
             open: true
-            , title: "Load Corpus"
+            , title: isDownload ? "Download Corpus" : "Load Corpus"
             , okFunction: () => {
                 props.loadCurrentCorpus(corpusId, isDownload, userId);
                 if (props.isMember) {
@@ -184,64 +147,5 @@ export const CorpusList = (props) => {
         }));
     }
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
-    return (
-        <Paper sx={{width: '100%', overflow: 'hidden'}}>
-            <TableContainer sx={{maxHeight: 440}}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columnsCallback.map((column) => {
-                                return (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{minWidth: column.minWidth, backgroundColor: "#378CE7", color: "white"}}
-                                    >{column.label}</TableCell>
-                                );
-                            })}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                        {columnsCallback.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
-                                );
-                            })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={rowsPerPageOptions}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-        </Paper>
-    )
-        ;
+    return (<>{dataTable}</>)
 }
