@@ -7,11 +7,9 @@ import {CommonContext} from "../../App";
 import {AlertNotification, alertSeverity as severity, alertSeverity} from "../commons/Alert";
 import {confirmationConfigDefault, ModalConfirmation} from "../commons/Confirmation";
 import {UserProfile} from "../../Helpers/userProfile";
-import SaveIcon from "@mui/icons-material/Save";
-import {Button} from "@mui/material";
 import {SetupCookies} from "../../Helpers/cookie";
 import Box from "@mui/joy/Box";
-import EditorToolbar, { modules, formats } from "./toolbar";
+import QuillToolbar , { modules, formats } from "./toolbar";
 
 export const AboutEditor = () => {
     const [content, setContent] = useState('');
@@ -121,6 +119,10 @@ export const AboutEditor = () => {
         });
     }
 
+    const handleAddAboutCallback = React.useCallback((content, token) => {
+        return handleAddAbout(content, token);
+    }, [content])
+
     const view = <>
         <Grid container sx={{marginTop: 10, width: '100%'}}>
             <Grid container justifyContent={"center"}  sx={{width: '100%'}}>
@@ -130,19 +132,13 @@ export const AboutEditor = () => {
                 <ModalConfirmation confirmationConfig={confirmationConfig}/>
                 <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>
             </Grid>
-            <Grid container justifyContent={"left"}  sx={{width: '100%'}}>
-                <Button
-                    size="small"
-                    color="success"
-                    variant="contained"
-                    onClick={() => {handleAddAbout(content, cookie.token)}}
-                    startIcon={<SaveIcon/>}
-                    sx={{minWidth: 110}}
-                >Save</Button>
-            </Grid>
         </Grid>
         <Box sx={{marginTop: 2, width: '100%'}}>
-            <EditorToolbar />
+            <QuillToolbar
+                handleAddAboutCallback={handleAddAboutCallback}
+                cookie={cookie}
+                contentMemo={contentMemo}
+            />
             <ReactQuill
                 theme="snow"
                 value={contentMemo}

@@ -11,7 +11,7 @@
     "@mui/icons-material": "^5.15.10",
     "@mui/joy": "^5.0.0-beta.28",
     "@mui/lab": "^5.0.0-alpha.167",
-    "@mui/material": "^5.15.10",
+    "@mui/material": "^5.15.18",
     "@mui/material-next": "^6.0.0-alpha.123",
     "@mui/styled-engine-sc": "^6.0.0-alpha.16",
     "@mui/system": "^5.15.9",
@@ -25,17 +25,17 @@
     "html-react-parser": "^5.1.10",
     "install": "^0.13.0",
     "npm": "^10.8.0",
-    "react": "^18.2.0",
+    "react": "^17.0.0 || ^18.0.0",
     "react-chartjs-2": "^5.2.0",
     "react-cookie": "^7.1.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
     "react-quill": "^2.0.0",
     "react-router": "^6.22.1",
     "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
     "react-simple-wysiwyg": "^3.0.2",
     "react-wordcloud": "^1.2.7",
-    "styled-components": "^6.1.8",
+    "styled-components": "^6.1.11",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -61,5 +61,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   }
 }
