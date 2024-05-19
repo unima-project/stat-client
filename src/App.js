@@ -9,8 +9,15 @@ import {GetTheme} from "./models";
 import {AlertNotification, alertSeverity} from "./components/commons/Alert";
 import {SetupCookies} from "./Helpers/cookie";
 import {defaultThemeColor} from "./components/Themes";
+import Translations from "./config/translations";
+import In from "./config/translations/in.json";
 
 export const CommonContext = createContext(null);
+
+const translationDefault = () => {
+    const t = new Translations(In);
+    return {t: t.Translate, source: t.translationSource}
+}
 
 function App() {
     const {cookie} = SetupCookies();
@@ -19,14 +26,15 @@ function App() {
     const [alertStatus, setAlertStatus] = React.useState({
         message: "", severity: alertSeverity.INFO
     });
+    const [translate, setTranslate] = React.useState(translationDefault());
 
     React.useEffect(() => {
-        getTheme(cookie.token);
-    }, [cookie])
+        getTheme();
+    }, [])
 
-    const getTheme = (token) => {
+    const getTheme = () => {
         setLoading(true);
-        GetTheme(token)
+        GetTheme()
             .then((data) => {
                 if (data.data !== null) {
                     setThemeColor(JSON.parse(data.data.color));
@@ -43,8 +51,13 @@ function App() {
             })
     }
 
+    const setupTranslate = (translationSource) => {
+        const t = new Translations(translationSource);
+        setTranslate({t: t.Translate, source: t.translationSource})
+    }
+
     return (
-        <CommonContext.Provider value={{loading, setLoading, themeColor}}>
+        <CommonContext.Provider value={{loading, setLoading, themeColor,  setupTranslate, translate}}>
             <BrowserRouter basename='/'>
                 <Loading open={loading}/>
                 <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>

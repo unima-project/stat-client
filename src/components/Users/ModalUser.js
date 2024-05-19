@@ -7,9 +7,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import {defaultUserData} from '../../models';
 import {AlertNotification} from "../commons/Alert";
 import {ModalUserContent} from "./ModalUserContent";
+import {CommonContext} from "../../App";
 
 export const ModalUser = (props) => {
     const [userData, setUserData] = React.useState(defaultUserData);
+    const {translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         setUserData(props.action.data);
@@ -23,7 +26,7 @@ export const ModalUser = (props) => {
                 fullWidth={true}
                 maxWidth={"md"}
             >
-                <DialogTitle>{props.action.title}</DialogTitle>
+                <DialogTitle>{t(props.action.title)}</DialogTitle>
                 <IconButton
                     aria-label="close"
                     onClick={props.handleModalClose}

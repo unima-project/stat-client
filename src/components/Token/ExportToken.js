@@ -9,7 +9,8 @@ import {exportTxt} from "../../Helpers/download";
 import {alertSeverity} from "../commons/Alert";
 
 export const ExportToken = (props) => {
-    const {setLoading, themeColor} = React.useContext(CommonContext);
+    const {setLoading, themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     const exportToken = (token_list) => {
         const tokens = getStringTokenList(token_list)
@@ -54,6 +55,6 @@ export const ExportToken = (props) => {
             onClick={GetTokenList}
             startIcon={<DownloadIcon/>}
             sx={{minWidth: 150, minHeight: 40, backgroundColor: themeColor.secondary}}
-        >Token List</Button>
+        >{t('token.list')}</Button>
     </Grid>
 }

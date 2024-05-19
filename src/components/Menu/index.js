@@ -13,26 +13,34 @@ import HomeIcon from '@mui/icons-material/Home';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import {CommonContext} from "../../App";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import {Stack} from "@mui/material";
+import In from "../../config/translations/in.json";
+import En from "../../config/translations/en.json";
 
 export const MainMenu = () => {
     const {cookie, removeCookie} = SetupCookies();
     const {isAdmin, isLogin} = UserProfile();
-    const {themeColor} = React.useContext(CommonContext);
+    const {themeColor, translate, setupTranslate} = React.useContext(CommonContext);
+    const t = translate.t;
 
-    React.useEffect(() => {},[isAdmin, isLogin, cookie]);
+    React.useEffect(() => {
+    },[isAdmin, isLogin, cookie]);
 
     const homeMenu = <>
         <Link to={'/'}>
             <Button
                 sx={{my: 2, color: 'white'}}
                 startIcon={<HomeIcon/>}
-            >Home</Button>
+            >{t('about')}</Button>
         </Link>
         <Link to={'/tools'}>
             <Button
                 sx={{my: 2, color: 'white'}}
                 startIcon={<QueryStatsIcon/>}
-            >Analisis Korpus</Button>
+            >{t('corpus.analysis')}</Button>
         </Link>
     </>
 
@@ -44,10 +52,40 @@ export const MainMenu = () => {
         }
     }
 
+    const langItems = [
+        {value: In, label: "IN"}
+        , {value: En, label: "EN"}
+    ];
+
+    const langOnChange = (e) => {
+        setupTranslate(e.target.value);
+    }
+
+    const langControl = <FormControl sx={{marginRight: 3}} size="small">
+                <Select
+                    value={translate.source}
+                    onChange={langOnChange}
+                    sx={{backgroundColor: 'white'}}
+                >
+                    {
+                        langItems.map((item, index) => {
+                            return (
+                                <MenuItem value={item.value} key={index}>
+                                    <Stack direction="row" spacing={1} alignItems={"center"}>
+                                        {/*<Typography>{item.icon(16)}</Typography>*/}
+                                        <Typography fontSize="10pt">{item.label}</Typography>
+                                    </Stack>
+                                </MenuItem>)
+                        })
+                    }
+                </Select>
+            </FormControl>
+
     return (
         <AppBar position="fixed" sx={{backgroundColor: themeColor.primary}}>
             <Container>
                 <Toolbar disableGutters>
+                    {langControl}
                     <Typography
                         variant="h6"
                         noWrap
@@ -56,7 +94,7 @@ export const MainMenu = () => {
                             display: {xs: 'none', md: 'flex'},
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            letterSpacing: '.2rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
@@ -78,7 +116,7 @@ export const MainMenu = () => {
                                 <Button
                                     sx={{my: 2, color: 'white'}}
                                     endIcon={<VpnKeyIcon/>}
-                                >Login</Button>
+                                >{t('login')}</Button>
                             </Link>
                     }
                 </Toolbar>

@@ -16,7 +16,8 @@ export const UserProfile = () => {
     const [userProfile, setUserProfile] = React.useState(defaultUserData);
     const [alertStatus, setAlertStatus] = React.useState(defaultAlertStatus);
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
-    const {setLoading} = React.useContext(CommonContext);
+    const {setLoading, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         if (!cookie.token) {
@@ -36,7 +37,7 @@ export const UserProfile = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `get user profile: ${error}`
+                    , message: `${t("get.user.profile")}: ${error}`
                 })
             })
             .finally(() => {

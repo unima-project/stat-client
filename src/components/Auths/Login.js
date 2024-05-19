@@ -15,7 +15,8 @@ import {CommonContext} from "../../App";
 
 export const LoginForm = (props) => {
     const [showPassword, setShowPassword] = React.useState(false);
-    const {themeColor} = React.useContext(CommonContext);
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
@@ -27,10 +28,10 @@ export const LoginForm = (props) => {
             <Box sx={{margin: 5, marginBottom: 7, textAlign: "center"}}>
                 <Stack direction="column" spacing={3}>
                     <FormControl variant="standard" required>
-                        <InputLabel>Email</InputLabel>
+                        <InputLabel>{t('email')}</InputLabel>
                         <Input
                             id="email"
-                            label="email"
+                            label={t('email')}
                             variant="standard"
                             onChange={props.handleChange}
                             value={props.auth.email}
@@ -45,10 +46,10 @@ export const LoginForm = (props) => {
                         />
                     </FormControl>
                     <FormControl variant="standard" required>
-                        <InputLabel>Password</InputLabel>
+                        <InputLabel>{t('password')}</InputLabel>
                         <Input
                             id="password"
-                            label="password"
+                            label={t('password')}
                             variant="standard"
                             type={showPassword ? "text" : "password"}
                             onChange={props.handleChange}
@@ -72,7 +73,7 @@ export const LoginForm = (props) => {
                     variant="contained"
                     type={"submit"}
                     sx={{backgroundColor: themeColor.primary}}
-                >Log In</Button>
+                >{t('login')}</Button>
             </Box>
         </form>
     );

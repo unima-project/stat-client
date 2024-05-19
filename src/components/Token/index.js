@@ -10,12 +10,13 @@ import {SetupCookies} from "../../Helpers/cookie";
 
 export const Token = (props) => {
     const [tokens, setTokens] = React.useState([]);
-    const {setLoading, themeColor} = React.useContext(CommonContext);
+    const {setLoading, themeColor, translate} = React.useContext(CommonContext);
     const [alertStatus, setAlertStatus] = React.useState({
         message: "", severity: alertSeverity.INFO
     });
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
     const {cookie} = SetupCookies();
+    const t = translate.t;
 
     React.useEffect(() => {
         GetTokenList();
@@ -66,7 +67,7 @@ export const Token = (props) => {
     return(
         <Grid container sx={{marginTop: 10, color: themeColor.primary}}>
             <Grid container justifyContent={"center"}  sx={{width: '100%'}}>
-                <h2>Daftar Token</h2>
+                <h2>{t('token.list')}</h2>
             </Grid>
             <Grid container justifyContent={"flex-end"} sx={{width: '100%'}}>
                 <ExportToken setAlertStatus={setAlertStatus} />

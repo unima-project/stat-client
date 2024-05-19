@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTheme} from '@mui/material/styles';
+import {CommonContext} from "../../App";
 
 export const confirmationConfigDefault = {
     open: false
@@ -19,6 +20,8 @@ export const ModalConfirmation = (props) => {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
+    const {translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         setConfirmationConfig(props.confirmationConfig);
@@ -59,10 +62,10 @@ export const ModalConfirmation = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleCancel}>
-                        Cancel
+                        {t('cancel')}
                     </Button>
                     <Button onClick={handleOk} autoFocus>
-                        Ok
+                        {t('ok')}
                     </Button>
                 </DialogActions>
             </Dialog>

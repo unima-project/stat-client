@@ -5,36 +5,17 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CorpusConfig from "../Corpuses/Config";
 import {CommonContext} from "../../App";
 
-const columns = {
-    ID: {
-        id: 'id'
-        , label: 'Id'
-        , minWidth: 10
-        , visible: true
-    }
-    , TOKEN: {
-        id: 'token'
-        , label: 'Token'
-        , minWidth: 50
-        , visible: true
-    }
-    , CREATED_AT: {
-        id: 'created_at'
-        , label: 'Created At'
-        , minWidth: 10
-        , visible: true
-    }
-    , ACTION: {
-        id: 'action'
-        , label: ''
-        , minWidth: 10
-        , visible: true
-    }
-}
-
 export const TokenList = (props) => {
     const {dataTable, setupColumn, setRows} = CommonTable();
-    const {themeColor} = React.useContext(CommonContext);
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
+
+    const columns = {
+        ID: {id: 'id', label: 'id', minWidth: 10, visible: true}
+        , TOKEN: {id: 'token', label: 'token', minWidth: 50, visible: true}
+        , CREATED_AT: {id: 'created_at', label: 'created.at', minWidth: 10, visible: true}
+        , ACTION: {id: 'action', label: '', minWidth: 10, visible: true}
+    }
 
     React.useEffect(() => {
         setRowData();
@@ -64,9 +45,9 @@ export const TokenList = (props) => {
     const handleDeleteToken = (tokenId) => {
         props.setConfirmationConfig({
             open: true
-            , title: "Delete Token"
+            , title: t("delete.token")
             , okFunction: () => props.deleteCurrentToken(tokenId)
-            , content: `Are you sure want to delete the token ?`
+            , content: t("are.you.sure.want.to.delete.the.token.?")
         });
     }
 

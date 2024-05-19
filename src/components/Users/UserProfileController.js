@@ -18,8 +18,8 @@ import {CommonContext} from "../../App";
 export const UserProfileController = (props) => {
     const [userProfile, setUserProfile] = React.useState(defaultUserData);
     const [dialogAction, setDialogAction] = React.useState(defaultDialogAction);
-    const {themeColor} = React.useContext(CommonContext);
-
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         setupUserProfile();
@@ -39,7 +39,7 @@ export const UserProfileController = (props) => {
         setDialogAction({
             onClose: closeDialogAction
             , open: true
-            , title: "Change password"
+            , title: t("change.password")
             , content: <UserChangePasswordForm
                 closeDialogAction={closeDialogAction}
                 setConfirmationConfig={props.setConfirmationConfig}
@@ -89,7 +89,7 @@ export const UserProfileController = (props) => {
                 variant="contained"
                 onClick={openDialogAction}
                 startIcon={<KeyIcon/>}
-            >Change Password</Button>
+            >{t("change.password")}</Button>
         </Stack>
 
     const content =

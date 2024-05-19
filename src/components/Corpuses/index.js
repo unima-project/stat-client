@@ -19,9 +19,10 @@ import {CommonContext} from "../../App";
 import Grid from '@mui/material/Unstable_Grid2';
 import {ExportToken} from "../Token/ExportToken";
 
-const defaultUserList = [{id: 0, name: '--- all user ---'}]
-
 export const Corpus = (props) => {
+    const {setLoading, translate} = React.useContext(CommonContext);
+    const t = translate.t;
+    const defaultUserList = [{id: 0, name: `--- ${t("all.owner")} ---`}]
     const [corpusList, setCorpusList] = React.useState([]);
     const {cookie} = SetupCookies();
     const [alertStatus, setAlertStatus] = React.useState({
@@ -31,7 +32,6 @@ export const Corpus = (props) => {
     const [userLevel, setUserLevel] = React.useState(userType.USER_MEMBER);
     const [userList, setUserList] = React.useState(defaultUserList)
     const [selectedUser, setSelectedUser] = React.useState(0)
-    const {setLoading} = React.useContext(CommonContext);
 
     React.useEffect(() => {
         setupUserLevel();
@@ -177,11 +177,11 @@ export const Corpus = (props) => {
     }
 
     const selectUser = <FormControl sx={{minWidth: 175}}>
-            <InputLabel>User</InputLabel>
+            <InputLabel>{t('owner')}</InputLabel>
             <Select
                 size={"small"}
                 value={selectedUser}
-                label="User"
+                label={t('owner')}
                 onChange={userOnChange}
             >
                 {

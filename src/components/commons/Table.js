@@ -16,8 +16,8 @@ export const CommonTable = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
     const [rows, setRows] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
-    const {themeColor} = React.useContext(CommonContext);
-
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     const columnsMemo = React.useMemo(() => {
         return columns
@@ -64,7 +64,7 @@ export const CommonTable = () => {
                                     key={column.id}
                                     align={column.align}
                                     style={{minWidth: column.minWidth, backgroundColor: themeColor.primary, color: "white"}}
-                                >{column.label}</TableCell>
+                                >{t(column.label)}</TableCell>
                             );
                         })}
                     </TableRow>

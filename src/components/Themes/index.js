@@ -25,13 +25,14 @@ export const Themes = () => {
     const [theme, setTheme] = useState(undefined);
     const [color, setColor] = useState(defaultThemeColor);
     const {cookie} = SetupCookies();
-    const {setLoading, themeColor} = React.useContext(CommonContext);
+    const {setLoading, themeColor, translate} = React.useContext(CommonContext);
     const [alertStatus, setAlertStatus] = React.useState({
         message: "", severity: alertSeverity.INFO
     });
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
     const {isAdmin} = UserProfile();
     const [dialogAction, setDialogAction] = React.useState(defaultDialogAction);
+    const t = translate.t;
 
     React.useEffect(() => {
         getTheme();
@@ -131,7 +132,7 @@ export const Themes = () => {
         setDialogAction({
             onClose: closeDialogAction
             , open: true
-            , title: "Pick Theme Color"
+            , title: t("pick.theme.color")
             , content: <ColorPalette
                 color={props.color}
                 setupThemeColor={setupThemeColor}
@@ -145,12 +146,12 @@ export const Themes = () => {
             variant="contained"
             sx={{backgroundColor: themeColor.primary, minWidth: 100}}
             onClick={() => handleAddThemeCallback(JSON.stringify(color), cookie.token)}
-        >Save</Button>
+        >{t('save')}</Button>
         <Button
             variant="contained"
             sx={{backgroundColor: themeColor.danger, minWidth: 100}}
-            onClick={() => handleResetTheme(cookie.token)}
-        >Reset</Button>
+            onClick={() => handleResetTheme()}
+        >{t('reset')}</Button>
     </Stack>
 
     const colorSchemeStack = <Stack container direction="row" alignItems="center" spacing={2}>
@@ -178,7 +179,7 @@ export const Themes = () => {
         if (color === null || color === undefined || color === '') {
             setAlertStatus({
                 severity: severity.ERROR
-                , message: 'color required !!'
+                , message: `${t('color.required')} !!`
             })
 
             return
@@ -186,18 +187,18 @@ export const Themes = () => {
 
         setConfirmationConfig({
             open: true
-            , title: "Add/ Update Theme"
+            , title: t("add./.update.theme.color")
             , okFunction: () => addUpdateCallback(color, token)
-            , content: `Are you sure want to add/ update theme ?`
+            , content: t("are.you.sure.want.to.add./.update.theme.?")
         });
     }
 
-    const handleResetTheme = (token) => {
+    const handleResetTheme = () => {
         setConfirmationConfig({
             open: true
-            , title: "Reset Theme"
+            , title: t("reset.theme.color")
             , okFunction: () => getTheme()
-            , content: `Are you sure want to reset theme ?`
+            , content: t("are.you.sure.want.to.reset.theme.color.?")
         });
     }
 
@@ -207,7 +208,7 @@ export const Themes = () => {
 
     const view = <Grid container sx={{marginTop: 10, color: themeColor.primary}}>
         <Grid container justifyContent={"center"} sx={{width: '100%'}}>
-            <h2>Color Theme</h2>
+            <h2>{t("color.theme")}</h2>
         </Grid>
         <Grid container justifyContent={"center"} sx={{width: '100%', marginTop: 3}}>
             {extendComponents}

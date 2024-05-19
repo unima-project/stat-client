@@ -18,15 +18,16 @@ import DialogActions from "@mui/material/DialogActions";
 import {CommonContext} from "../../App";
 
 export const ModalUserContent = (props) => {
-    const {themeColor} = React.useContext(CommonContext);
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     const userStatusConfig = {
         0: {
-            label: userStatus.USER_INACTIVE.label
+            label: t(userStatus.USER_INACTIVE.label)
             , color: "danger"
         }
         , 1: {
-            label: userStatus.USER_ACTIVE.label
+            label: t(userStatus.USER_ACTIVE.label)
             , color: "primary"
         }
     }
@@ -63,7 +64,7 @@ export const ModalUserContent = (props) => {
                     ? props.createUser(props.userData)
                     : props.updateUser(props.userData)
             }
-            , content: `Are you sure want to ${props.action.title} ${props.userData.name} ?`
+            , content: t("are.you.sure.want.to.update./.add.member.?")
         });
     }
 
@@ -72,7 +73,7 @@ export const ModalUserContent = (props) => {
             open: true
             , title: props.action.title
             , okFunction: () => props.resetUserPassword(props.userData.id)
-            , content: `Are you sure want to reset ${props.userData.name} password ?`
+            , content: t("are.you.sure.want.to.reset.${props.userData.name}.password.?")
         });
     }
 
@@ -130,7 +131,7 @@ export const ModalUserContent = (props) => {
                         <Grid container rowSpacing={3} columnSpacing={{xs: 1, sm: 1, md: 1}}>
                             <Grid xs={4}>
                                 {formSelectField({
-                                    label: "Type"
+                                    label: t("type")
                                     , value: parseInt(props.userData.user_type)
                                     , data: (event) => {
                                         return {user_type: event.target.value}
@@ -148,13 +149,13 @@ export const ModalUserContent = (props) => {
                                             color="info"
                                             onClick={handleResetPassword}
                                             startIcon={<KeyIcon/>}
-                                        >Reset Password</Button>
+                                        >{t("reset.password")}</Button>
                                         : <></>
                                 }
                             </Grid>
                             <Grid xs={6}>
                                 {formTextField({
-                                    label: "Name"
+                                    label: t("name")
                                     , value: props.userData.name
                                     , data: (event) => {
                                         return {name: event.target.value}
@@ -164,7 +165,7 @@ export const ModalUserContent = (props) => {
                             </Grid>
                             <Grid xs={6}>
                                 {formTextField({
-                                    label: "Email"
+                                    label: t("email")
                                     , type: "email"
                                     , value: props.userData.email
                                     , data: (event) => {
@@ -175,7 +176,7 @@ export const ModalUserContent = (props) => {
                             </Grid>
                             <Grid xs={4}>
                                 {formTextField({
-                                    label: "No.KTP"
+                                    label: t("no.ktp")
                                     , value: props.userData.no_ktp
                                     , data: (event) => {
                                         return {no_ktp: event.target.value}
@@ -185,7 +186,7 @@ export const ModalUserContent = (props) => {
                             </Grid>
                             <Grid xs={4}>
                                 {formTextField({
-                                    label: "No.HP"
+                                    label: t("no.hp")
                                     , value: props.userData.no_hp
                                     , data: (event) => {
                                         return {no_hp: event.target.value}
@@ -195,7 +196,7 @@ export const ModalUserContent = (props) => {
                             </Grid>
                             <Grid xs={6}>
                                 {formTextField({
-                                    label: "Address"
+                                    label: t("address")
                                     , value: props.userData.address
                                     , data: (event) => {
                                         return {address: event.target.value}
@@ -205,7 +206,7 @@ export const ModalUserContent = (props) => {
                             </Grid>
                             <Grid xs={6}>
                                 {formTextField({
-                                    label: "Reason"
+                                    label: t("reason")
                                     , value: props.userData.reason
                                     , data: (event) => {
                                         return {reason: event.target.value}
@@ -215,7 +216,7 @@ export const ModalUserContent = (props) => {
                             </Grid>
                             <Grid xs={12}>
                                 {formCheckedField({
-                                    label: "Status"
+                                    label: t("status")
                                     , value: props.userData.status
                                     , data: (event) => {
                                         return {status: event.target.checked}
@@ -230,14 +231,14 @@ export const ModalUserContent = (props) => {
                                 onClick={props.handleModalClose}
                                 startIcon={<RestartAltIcon/>}
                                 autoFocus
-                            >Cancel</Button>
+                            >{t('cancel')}</Button>
                             <Button
                                 sx={{backgroundColor: themeColor.primary}}
                                 variant="contained"
                                 startIcon={<SaveIcon/>}
                                 type="submit"
                                 autoFocus
-                            >Save</Button>
+                            >{t('save')}</Button>
                         </DialogActions>
                     </Box>
                     : <></>

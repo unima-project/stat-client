@@ -1,48 +1,41 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import {Button, Stack} from "@mui/material";
-import {userTypeConfig, userStatus, userType} from "../../models";
+import {userStatus, userTypeItems} from "../../models";
 import Switch from '@mui/material/Switch';
 import {userAction} from './index';
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Select from "@mui/material/Select";
-import {userTypeItems} from "../../models";
 import FormControl from "@mui/material/FormControl";
 import {CommonTable} from "../commons/Table";
 import {CommonContext} from "../../App";
 
-const columns = {
-    ID: {id: 'no', label: 'No', minWidth: 5, visible: true}
-    , USER_TYPE: {id: 'user_type', label: 'Type', minWidth: 25, visible: true}
-    , NAME: {id: 'name', label: 'Name', minWidth: 50, visible: true}
-    , EMAIL: {id: 'email', label: 'Email', minWidth: 50, visible: true}
-    , NO_KTP: {id: 'noKtp', label: 'No.KTP', minWidth: 20, visible: true}
-
-    , NO_HP: {id: 'noHp', label: 'No.HP', minWidth: 20, visible: true}
-    , ADDRESS: {id: 'address', label: 'Address', minWidth: 100, visible: true}
-    , REASON: {id: 'reason', label: 'Reason', minWidth: 20, visible: true}
-    , STATUS: {id: 'status', label: 'Status', minWidth: 10, visible: true}
-    , ACTION: {id: 'action', label: '', minWidth: 20, visible: true}
-}
-
 export const UserList = (props) => {
     const {dataTable, setupColumn, setRows} = CommonTable();
-    const {themeColor} = React.useContext(CommonContext);
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
+
+    const columns = {
+        ID: {id: 'no', label: 'id', minWidth: 5, visible: true}
+        , USER_TYPE: {id: 'user_type', label: 'type', minWidth: 25, visible: true}
+        , NAME: {id: 'name', label: 'name', minWidth: 50, visible: true}
+        , EMAIL: {id: 'email', label: 'email', minWidth: 50, visible: true}
+        , NO_KTP: {id: 'noKtp', label: 'no.ktp', minWidth: 20, visible: true}
+
+        , NO_HP: {id: 'noHp', label: 'no.hp', minWidth: 20, visible: true}
+        , ADDRESS: {id: 'address', label: 'address', minWidth: 100, visible: true}
+        , REASON: {id: 'reason', label: 'reason', minWidth: 20, visible: true}
+        , STATUS: {id: 'status', label: 'status', minWidth: 10, visible: true}
+        , ACTION: {id: 'action', label: '', minWidth: 20, visible: true}
+    }
 
     React.useEffect(() => {
         setRowData();
         setupColumn(columns);
     }, [props.corpusListMemo, props.userLevel])
+
 
     const userStatusConfig = {
         0: {label: userStatus.USER_INACTIVE.label}
@@ -54,27 +47,25 @@ export const UserList = (props) => {
     }, [props.userList])
 
     const typeOnChange = (event, user) => {
-        const typeSelect = event.target.value;
-        user.user_type = typeSelect;
+        user.user_type = event.target.value;
         props.setConfirmationConfig({
             open: true
-            , title: "Update User"
+            , title: t("update.member")
             , okFunction: () => {
                 props.updateUser(user);
             }
-            , content: `Are you sure want to set user ${user.name} as ${userTypeConfig[typeSelect].label} ?`
+            , content: t("are.you.sure.want.to.update.this.member.?")
         });
     }
     const statusOnChange = (event, user) => {
-        const checked = event.target.checked ? 1 : 0;
-        user.status = checked;
+        user.status = event.target.checked ? 1 : 0;
         props.setConfirmationConfig({
             open: true
-            , title: "Update User"
+            , title: t("update.member")
             , okFunction: () => {
                 props.updateUser(user);
             }
-            , content: `Are you sure want to set ${userStatusConfig[checked].label} user ${user.name} ?`
+            , content: t("are.you.sure.want.to.update.this.member.?")
         });
     }
 
@@ -154,17 +145,17 @@ export const UserList = (props) => {
     const handleDelete = (userId, userName) => {
         props.setConfirmationConfig({
             open: true
-            , title: "Delete User"
+            , title: t("delete.member")
             , okFunction: () => {
                 props.deleteUser(userId)
             }
-            , content: `Are you sure want to delete user ${userName} ?`
+            , content: t("are.you.sure.want.to.delete.this.user.?")
         })
     }
 
     const handleEdit = (user) => {
         props.handleModalOpen({
-            title: userAction.EDIT_USER
+            title: t(userAction.EDIT_USER)
             , data: user
         });
     }

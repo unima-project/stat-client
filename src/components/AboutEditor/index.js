@@ -14,13 +14,14 @@ import QuillToolbar , { modules, formats } from "./toolbar";
 export const AboutEditor = () => {
     const [content, setContent] = useState('');
     const [about, setAbout] = useState(undefined);
-    const {setLoading, themeColor} = React.useContext(CommonContext);
+    const {setLoading, themeColor, translate} = React.useContext(CommonContext);
     const [alertStatus, setAlertStatus] = React.useState({
         message: "", severity: alertSeverity.INFO
     });
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
     const {isAdmin} = UserProfile();
     const {cookie} = SetupCookies();
+    const t = translate.t;
 
     React.useEffect(() => {
         getAbout();
@@ -105,7 +106,7 @@ export const AboutEditor = () => {
         if (content === null || content === undefined || content === '') {
             setAlertStatus({
                 severity: severity.ERROR
-                , message: 'content required !!'
+                , message: `${t('content.required')} !!`
             })
 
             return
@@ -113,9 +114,9 @@ export const AboutEditor = () => {
 
         setConfirmationConfig({
             open: true
-            , title: "Add/ Update About"
+            , title: t("add./.update.about.content")
             , okFunction: () => addUpdateCallback(content, token)
-            , content: `Are you sure want to add/ update about ?`
+            , content: t("are.you.sure.want.to.add./.update.about.?")
         });
     }
 
@@ -126,7 +127,7 @@ export const AboutEditor = () => {
     const view = <>
         <Grid container sx={{marginTop: 10, width: '100%', color: themeColor.primary}}>
             <Grid container justifyContent={"center"}  sx={{width: '100%'}}>
-                <h2>About</h2>
+                <h2>{t("about")}</h2>
             </Grid>
             <Grid container justifyContent={"center"}  sx={{width: '100%'}}>
                 <ModalConfirmation confirmationConfig={confirmationConfig}/>

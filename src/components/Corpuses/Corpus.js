@@ -3,7 +3,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DownloadIcon from '@mui/icons-material/Download';
 import {Button, Stack} from "@mui/material";
 import Switch from "@mui/material/Switch";
-import {corpusPublicStatusConfig, userType} from "../../models";
+import {userType} from "../../models";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CorpusConfig from "./Config";
 import {CommonTable} from "../commons/Table"
@@ -11,7 +11,17 @@ import {CommonContext} from "../../App";
 
 export const CorpusList = (props) => {
     const {dataTable, setupColumn, setRows} = CommonTable();
-    const {themeColor} = React.useContext(CommonContext);
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
+
+    const columnsConfig = {
+        ID: {id: 'id', label: 'id', minWidth: 10, visible: true}
+        , USER: {id: 'user', label: 'owner', minWidth: 50, visible: true}
+        , CORPUS: {id: 'corpus', label: 'corpus', minWidth: 50, visible: true}
+        , PUBLIC: {id: 'public', label: 'public', minWidth: 10, visible: true}
+        , CREATED_AT: {id: 'created_at', label: 'created.at', minWidth: 10, visible: true}
+        , ACTION: {id: 'action', label: '', minWidth: 10, visible: true}
+    }
 
     React.useEffect(() => {
         setRowData();
@@ -19,28 +29,28 @@ export const CorpusList = (props) => {
     }, [props.corpusListMemo, props.userLevel])
 
     const setupCurrentColumn = () => {
-        const config = new CorpusConfig(props.userLevel)
+        const config = new CorpusConfig(props.userLevel, columnsConfig);
         setupColumn(config.SetColumns().columns);
     }
 
     const handleDeleteCorpus = (corpusId) => {
         props.setConfirmationConfig({
             open: true
-            , title: "Delete Corpus"
+            , title: t("delete.corpus")
             , okFunction: () => props.deleteCurrentCorpus(corpusId)
-            , content: `Are you sure want to delete the corpus ?`
+            , content: t('are.you.sure.want.to.delete.the.corpus.?')
         });
     }
 
     const handleLoadCorpus = (corpusId, isDownload, userId) => {
-        let content = `Are you sure want to load the corpus ?`
+        let content = t('are.you.sure.want.to.load.the.corpus.?')
         if (isDownload) {
-            content = `Are you sure want to download the token list ?`
+            content = t('are.you.sure.want.to.download.the.token.list.?')
         }
 
         props.setConfirmationConfig({
             open: true
-            , title: isDownload ? "Download Corpus" : "Load Corpus"
+            , title: isDownload ? t("download.corpus") : t("load.corpus")
             , okFunction: () => {
                 props.loadCurrentCorpus(corpusId, isDownload, userId);
                 if (props.isMember) {
@@ -52,15 +62,14 @@ export const CorpusList = (props) => {
     }
 
     const publicOnChange = (event, corpus) => {
-        const checked = event.target.checked ? 1 : 0;
-        corpus.public = checked;
+        corpus.public = event.target.checked ? 1 : 0;
         props.setConfirmationConfig({
             open: true
-            , title: "Update Corpus"
+            , title: t("update.corpus")
             , okFunction: () => {
                 props.updateCurrentCorpus(corpus);
             }
-            , content: `Are you sure want to set ${corpusPublicStatusConfig[checked].label} ?`
+            , content: t("are.you.sure.want.to.update.this.member.?")
         });
     }
 
