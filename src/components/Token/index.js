@@ -10,7 +10,7 @@ import {SetupCookies} from "../../Helpers/cookie";
 
 export const Token = (props) => {
     const [tokens, setTokens] = React.useState([]);
-    const {setLoading} = React.useContext(CommonContext);
+    const {setLoading, themeColor} = React.useContext(CommonContext);
     const [alertStatus, setAlertStatus] = React.useState({
         message: "", severity: alertSeverity.INFO
     });
@@ -64,7 +64,7 @@ export const Token = (props) => {
     }
 
     return(
-        <Grid container sx={{marginTop: 10}}>
+        <Grid container sx={{marginTop: 10, color: themeColor.primary}}>
             <Grid container justifyContent={"center"}  sx={{width: '100%'}}>
                 <h2>Daftar Token</h2>
             </Grid>

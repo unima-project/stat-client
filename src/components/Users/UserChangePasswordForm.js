@@ -14,6 +14,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DialogActions from "@mui/material/DialogActions";
 import {UpdateUserPassword} from "../../models";
 import {SetupCookies} from '../../Helpers/cookie';
+import {CommonContext} from "../../App";
 
 export const UserChangePasswordForm = (props) => {
     const {cookie} = SetupCookies();
@@ -24,6 +25,7 @@ export const UserChangePasswordForm = (props) => {
     const [dataPassword, setDataPassword] = React.useState({
         old_password: "", new_password: "", confirm_password: ""
     })
+    const {themeColor} = React.useContext(CommonContext);
 
     const handlePasswordState = (data) => {
         setDataPassword({
@@ -143,14 +145,14 @@ export const UserChangePasswordForm = (props) => {
             </Stack>
             <DialogActions sx={{p: 2}}>
                 <Button
-                    color="error"
+                    sx={{backgroundColor: themeColor.danger}}
                     variant="contained"
                     onClick={props.closeDialogAction}
                     startIcon={<RestartAltIcon/>}
                     autoFocus
                 >Cancel</Button>
                 <Button
-                    color="primary"
+                    sx={{backgroundColor: themeColor.primary}}
                     variant="contained"
                     startIcon={<SaveIcon/>}
                     autoFocus

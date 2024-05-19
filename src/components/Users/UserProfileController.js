@@ -13,10 +13,13 @@ import TextsmsIcon from '@mui/icons-material/Textsms';
 import KeyIcon from "@mui/icons-material/Key";
 import {ModalForm, defaultDialogAction} from "../commons/ModalForm";
 import {UserChangePasswordForm} from "./UserChangePasswordForm";
+import {CommonContext} from "../../App";
 
 export const UserProfileController = (props) => {
     const [userProfile, setUserProfile] = React.useState(defaultUserData);
     const [dialogAction, setDialogAction] = React.useState(defaultDialogAction);
+    const {themeColor} = React.useContext(CommonContext);
+
 
     React.useEffect(() => {
         setupUserProfile();
@@ -45,7 +48,7 @@ export const UserProfileController = (props) => {
     }
 
     const badgeComp =
-        <Typography color={userTypeConfig[userProfile.user_type].color}>
+        <Typography sx={{color:themeColor[userTypeConfig[userProfile.user_type].color]}}>
             {userTypeConfig[userProfile.user_type].icon(175)}
         </Typography>
 
@@ -82,16 +85,15 @@ export const UserProfileController = (props) => {
             </Stack>
             <Button
                 size="small"
-                sx={{p:1, minWidth: 200}}
+                sx={{p:1, minWidth: 200, backgroundColor: themeColor.warning}}
                 variant="contained"
-                color="error"
                 onClick={openDialogAction}
                 startIcon={<KeyIcon/>}
             >Change Password</Button>
         </Stack>
 
     const content =
-        <Stack direction="column" spacing={2}>
+        <Stack direction="column" spacing={2} sx={{color: themeColor.primary}}>
             <Box>{nameComp}</Box>
             <Grid container rowSpacing={2}>
                 <Grid xs={6} sx={{width: '50%'}}>

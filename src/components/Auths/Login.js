@@ -10,17 +10,19 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import {Button, Stack} from "@mui/material";
+import {CommonContext} from "../../App";
 
 
 export const LoginForm = (props) => {
     const [showPassword, setShowPassword] = React.useState(false);
+    const {themeColor} = React.useContext(CommonContext);
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     return (
         <form onSubmit={props.handleSubmit}>
             <Box sx={{margin: 5, textAlign: "center"}}>
-                <AccountCircleIcon sx={{fontSize: 100}} />
+                <AccountCircleIcon sx={{fontSize: 100, color: themeColor.primary}} />
             </Box>
             <Box sx={{margin: 5, marginBottom: 7, textAlign: "center"}}>
                 <Stack direction="column" spacing={3}>
@@ -69,6 +71,7 @@ export const LoginForm = (props) => {
                     fullWidth
                     variant="contained"
                     type={"submit"}
+                    sx={{backgroundColor: themeColor.primary}}
                 >Log In</Button>
             </Box>
         </form>

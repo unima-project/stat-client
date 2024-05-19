@@ -7,9 +7,11 @@ import {corpusPublicStatusConfig, userType} from "../../models";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CorpusConfig from "./Config";
 import {CommonTable} from "../commons/Table"
+import {CommonContext} from "../../App";
 
 export const CorpusList = (props) => {
     const {dataTable, setupColumn, setRows} = CommonTable();
+    const {themeColor} = React.useContext(CommonContext);
 
     React.useEffect(() => {
         setRowData();
@@ -67,7 +69,7 @@ export const CorpusList = (props) => {
             size="small"
             variant="outlined"
             component="label"
-            color={prop.color}
+            sx={{color: prop.color}}
             onClick={prop.action}
             key={prop.key}
         >{prop.icon}</Button>
@@ -75,7 +77,7 @@ export const CorpusList = (props) => {
 
     const deleteCorpusButton = (corpusId) => {
         return actionButton({
-            color: "error"
+            color: themeColor.danger
             , action: () => handleDeleteCorpus(corpusId)
             , icon: <DeleteForeverIcon/>
             , key: 1,
@@ -84,7 +86,7 @@ export const CorpusList = (props) => {
 
     const loadCorpusButton = (corpusId, userId) => {
         return actionButton({
-            color: "primary"
+            color: themeColor.primary
             , action: () => handleLoadCorpus(corpusId, false, userId)
             , icon: <VisibilityIcon/>
             , key: 2,
@@ -93,7 +95,7 @@ export const CorpusList = (props) => {
 
     const printCorpusTokenButton = (corpusId, userId) => {
         return actionButton({
-            color: "success"
+            color: themeColor.success
             , action: () => handleLoadCorpus(corpusId, true, userId)
             , icon: <DownloadIcon/>
             , key: 3,

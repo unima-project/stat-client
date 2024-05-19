@@ -12,10 +12,12 @@ import {UserProfile} from "../../Helpers/userProfile";
 import HomeIcon from '@mui/icons-material/Home';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import {CommonContext} from "../../App";
 
 export const MainMenu = () => {
     const {cookie, removeCookie} = SetupCookies();
     const {isAdmin, isLogin} = UserProfile();
+    const {themeColor} = React.useContext(CommonContext);
 
     React.useEffect(() => {},[isAdmin, isLogin, cookie]);
 
@@ -43,7 +45,7 @@ export const MainMenu = () => {
     }
 
     return (
-        <AppBar position="fixed">
+        <AppBar position="fixed" sx={{backgroundColor: themeColor.primary}}>
             <Container>
                 <Toolbar disableGutters>
                     <Typography

@@ -14,7 +14,7 @@ import QuillToolbar , { modules, formats } from "./toolbar";
 export const AboutEditor = () => {
     const [content, setContent] = useState('');
     const [about, setAbout] = useState(undefined);
-    const {setLoading} = React.useContext(CommonContext);
+    const {setLoading, themeColor} = React.useContext(CommonContext);
     const [alertStatus, setAlertStatus] = React.useState({
         message: "", severity: alertSeverity.INFO
     });
@@ -113,9 +113,9 @@ export const AboutEditor = () => {
 
         setConfirmationConfig({
             open: true
-            , title: "Add About"
+            , title: "Add/ Update About"
             , okFunction: () => addUpdateCallback(content, token)
-            , content: `Are you sure want to add about ?`
+            , content: `Are you sure want to add/ update about ?`
         });
     }
 
@@ -124,7 +124,7 @@ export const AboutEditor = () => {
     }, [content])
 
     const view = <>
-        <Grid container sx={{marginTop: 10, width: '100%'}}>
+        <Grid container sx={{marginTop: 10, width: '100%', color: themeColor.primary}}>
             <Grid container justifyContent={"center"}  sx={{width: '100%'}}>
                 <h2>About</h2>
             </Grid>

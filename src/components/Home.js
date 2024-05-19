@@ -32,7 +32,6 @@ export const Home = () => {
         GetAbout()
             .then((data) => {
                 if (data.data !== null) {
-                    console.log(data.data.content);
                     setContent(data.data.content);
                 }
             })

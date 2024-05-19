@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import {CommonContext} from "../../App";
 
 const rowsPerPageOptions = [5, 10, 25, 50];
 
@@ -15,7 +16,7 @@ export const CommonTable = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
     const [rows, setRows] = React.useState([]);
     const [columns, setColumns] = React.useState([]);
-
+    const {themeColor} = React.useContext(CommonContext);
 
 
     const columnsMemo = React.useMemo(() => {
@@ -62,7 +63,7 @@ export const CommonTable = () => {
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{minWidth: column.minWidth, backgroundColor: "#378CE7", color: "white"}}
+                                    style={{minWidth: column.minWidth, backgroundColor: themeColor.primary, color: "white"}}
                                 >{column.label}</TableCell>
                             );
                         })}

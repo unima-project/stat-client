@@ -15,12 +15,15 @@ import {userAction} from "./index";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SaveIcon from "@mui/icons-material/Save";
 import DialogActions from "@mui/material/DialogActions";
+import {CommonContext} from "../../App";
 
 export const ModalUserContent = (props) => {
+    const {themeColor} = React.useContext(CommonContext);
+
     const userStatusConfig = {
         0: {
             label: userStatus.USER_INACTIVE.label
-            , color: "error"
+            , color: "danger"
         }
         , 1: {
             label: userStatus.USER_ACTIVE.label
@@ -90,8 +93,8 @@ export const ModalUserContent = (props) => {
                             return (
                                 <MenuItem value={item.value} key={index}>
                                     <Stack direction="row" spacing={1} alignItems={"center"}>
-                                        <Typography color={item.color}>{item.icon(22)}</Typography>
-                                        <Typography color={item.color}>{item.label}</Typography>
+                                        <Typography sx={{color:themeColor[item.color]}}>{item.icon(22)}</Typography>
+                                        <Typography sx={{color:themeColor[item.color]}}>{item.label}</Typography>
                                     </Stack>
                                 </MenuItem>)
                         })
@@ -111,7 +114,7 @@ export const ModalUserContent = (props) => {
                         }}
                         required
                     />
-                    <Typography color={userStatusConfig[prop.value ? 1 : 0].color}>{
+                    <Typography sx={{color:themeColor[userStatusConfig[prop.value ? 1 : 0].color]}}>{
                         userStatusConfig[prop.value ? 1 : 0].label
                     }</Typography>
                 </Stack>
@@ -140,7 +143,7 @@ export const ModalUserContent = (props) => {
                                     props.action.title === userAction.EDIT_USER
                                         ? <Button
                                             size="small"
-                                            sx={{p: 1}}
+                                            sx={{p: 1, backgroundColor: themeColor.warning}}
                                             variant="contained"
                                             color="info"
                                             onClick={handleResetPassword}
@@ -222,14 +225,14 @@ export const ModalUserContent = (props) => {
                         </Grid>
                         <DialogActions sx={{p: 2}}>
                             <Button
-                                color="error"
+                                sx={{backgroundColor: themeColor.danger}}
                                 variant="contained"
                                 onClick={props.handleModalClose}
                                 startIcon={<RestartAltIcon/>}
                                 autoFocus
                             >Cancel</Button>
                             <Button
-                                color="primary"
+                                sx={{backgroundColor: themeColor.primary}}
                                 variant="contained"
                                 startIcon={<SaveIcon/>}
                                 type="submit"

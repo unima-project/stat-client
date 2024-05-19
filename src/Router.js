@@ -6,6 +6,7 @@ import {UserProfile} from './components/Users/UserProfile';
 import {User} from './components/Users';
 import {Token} from "./components/Token";
 import {AboutEditor} from "./components/AboutEditor";
+import {Themes} from "./components/Themes";
 
 const routes = [
     {
@@ -40,6 +41,10 @@ const routes = [
     {
         path: '/about_editor',
         element: <AboutEditor />
+    },
+    {
+        path: '/themes',
+        element: <Themes />
     }
 ];
 

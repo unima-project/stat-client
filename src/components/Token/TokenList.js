@@ -3,6 +3,7 @@ import {CommonTable} from "../commons/Table";
 import {Button, Stack} from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CorpusConfig from "../Corpuses/Config";
+import {CommonContext} from "../../App";
 
 const columns = {
     ID: {
@@ -33,6 +34,7 @@ const columns = {
 
 export const TokenList = (props) => {
     const {dataTable, setupColumn, setRows} = CommonTable();
+    const {themeColor} = React.useContext(CommonContext);
 
     React.useEffect(() => {
         setRowData();
@@ -44,7 +46,7 @@ export const TokenList = (props) => {
             size="small"
             variant="outlined"
             component="label"
-            color={prop.color}
+            sx={{color: prop.color}}
             onClick={prop.action}
             key={prop.key}
         >{prop.icon}</Button>
@@ -52,7 +54,7 @@ export const TokenList = (props) => {
 
     const deleteTokenButton = (tokenId) => {
         return actionButton({
-            color: "error"
+            color: themeColor.danger
             , action: () => handleDeleteToken(tokenId)
             , icon: <DeleteForeverIcon/>
             , key: 1,

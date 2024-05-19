@@ -4,7 +4,8 @@ import {ApiAuth} from "./Auth";
 import {ApiCorpus} from "./Corpus";
 import {ApiUser} from "./User";
 import {ApiToken} from "./Token";
-import {ApiAbout} from "./about";
+import {ApiAbout} from "./About";
+import {ApiTheme} from "./Theme";
 
 const baseUrl = process.env.REACT_APP_SERVER_BACKEND_URL;
 const timeOut = 30000
@@ -91,3 +92,9 @@ export const {
     , UpdateAbout
     , AddAbout
 } = ApiAbout();
+
+export const {
+    GetTheme
+    , UpdateTheme
+    , AddTheme
+} = ApiTheme();

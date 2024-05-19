@@ -17,7 +17,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {Button} from "@mui/material";
 import Grid from '@mui/system/Unstable_Grid';
 import {confirmationConfigDefault, ModalConfirmation} from "../commons/Confirmation";
-import {Loading} from "../commons/Loading";
+import {CommonContext} from "../../App";
 
 export const userAction = {
     INPUT_USER: "Input User"
@@ -37,7 +37,7 @@ export const User = () => {
     const [action, setAction] = React.useState(defaultUserAction);
     const [modalOpen, setModalOpen] = React.useState(false);
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
-    const [loading, setLoading] = React.useState(false);
+    const {setLoading, themeColor} = React.useContext(CommonContext);
 
     React.useEffect(() => {
         if (!cookie.token) {
@@ -170,17 +170,15 @@ export const User = () => {
             })
     }
 
-    return (<Box sx={{marginTop: 15}}>
-        <Loading open={loading}/>
+    return (<Box sx={{marginTop: 15, color: themeColor.primary}}>
         <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>
         <ModalConfirmation confirmationConfig={confirmationConfig}/>
         <Grid container justify="flex-end">
             <h2>User List</h2>
             <Button
-                sx={{mb: 2, marginLeft: "auto"}}
+                sx={{mb: 2, marginLeft: "auto", color: themeColor.success}}
                 variant="outlined"
                 component="label"
-                color="success"
                 onClick={() => {
                     handleModalOpen({
                         title: userAction.INPUT_USER

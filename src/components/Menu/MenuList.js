@@ -14,6 +14,7 @@ import {Stack} from "@mui/material";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ListIcon from '@mui/icons-material/List';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 
 export const MenuList = (props) => {
@@ -86,6 +87,10 @@ export const MenuList = (props) => {
         navigate("/about_editor");
     };
 
+    const handleThemes = () => {
+        navigate("/themes");
+    };
+
     const memberSettings = [
         {
             key: "Profile"
@@ -119,6 +124,11 @@ export const MenuList = (props) => {
             key: "About"
             , func: handleAboutEditor
             , icon: <BorderColorIcon/>
+        },
+        {
+            key: "Theme"
+            , func: handleThemes
+            , icon: <ColorLensIcon/>
         },
     ]
 
