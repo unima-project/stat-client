@@ -2,6 +2,7 @@ import React from 'react';
 import Box from "@mui/material/Box";
 import {SetupCookies} from '../../Helpers/cookie';
 import {GetUserProfile} from "../../models";
+import {Loading} from "../commons/Loading";
 import {AlertNotification, alertSeverity, defaultAlertStatus} from "../commons/Alert";
 import {UserProfileController} from "./UserProfileController";
 import {defaultUserData} from '../../models';
@@ -15,7 +16,8 @@ export const UserProfile = () => {
     const [userProfile, setUserProfile] = React.useState(defaultUserData);
     const [alertStatus, setAlertStatus] = React.useState(defaultAlertStatus);
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
-    const {setLoading} = React.useContext(CommonContext);
+    const {setLoading, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         if (!cookie.token) {
@@ -35,7 +37,7 @@ export const UserProfile = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `get user profile: ${error}`
+                    , message: error
                 })
             })
             .finally(() => {

@@ -56,7 +56,7 @@ export const Login = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {

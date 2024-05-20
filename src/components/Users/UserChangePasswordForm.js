@@ -14,6 +14,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DialogActions from "@mui/material/DialogActions";
 import {UpdateUserPassword} from "../../models";
 import {SetupCookies} from '../../Helpers/cookie';
+import {CommonContext} from "../../App";
 
 export const UserChangePasswordForm = (props) => {
     const {cookie} = SetupCookies();
@@ -24,6 +25,8 @@ export const UserChangePasswordForm = (props) => {
     const [dataPassword, setDataPassword] = React.useState({
         old_password: "", new_password: "", confirm_password: ""
     })
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     const handlePasswordState = (data) => {
         setDataPassword({
@@ -47,7 +50,7 @@ export const UserChangePasswordForm = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `change user password: ${error}`
+                    , message: `change.member.password: ${error}`
                 })
             })
     }
@@ -55,7 +58,7 @@ export const UserChangePasswordForm = (props) => {
     const handleConfirmPassword = (confirmPassword) => {
         if (!validatePassword(confirmPassword)) {
             setAlertStatus({
-                message: "Password is not match"
+                message: "password.is.not.match"
                 , severity: alertSeverity.ERROR
             });
             return false
@@ -74,9 +77,9 @@ export const UserChangePasswordForm = (props) => {
         if (handleConfirmPassword(dataPassword.confirm_password)) {
             props.setConfirmationConfig({
                 open: true
-                , title: "Change password"
+                , title: "change.password"
                 , okFunction: () => changeUserPassword(dataPassword)
-                , content: `Are you sure want to change password ?`
+                , content: "are.you.sure.want.to.change.password.?"
             });
         }
     }
@@ -109,7 +112,7 @@ export const UserChangePasswordForm = (props) => {
             <Stack spacing={1} direction="row" alignItems="center">
                 <Box>
                     {passwordComponent({
-                        label: "Old Password"
+                        label: t("old.Password")
                         , id: "old_password"
                         , type: showOldPassword ? 'text' : 'password'
                         , iconOnClick: () => handleShowPasswordState(showOldPassword, setShowOldPassword)
@@ -119,7 +122,7 @@ export const UserChangePasswordForm = (props) => {
                 </Box>
                 <Box>
                     {passwordComponent({
-                        label: "New Password"
+                        label: t("new.password")
                         , id: "new_password"
                         , type: showNewPassword ? 'text' : 'password'
                         , iconOnClick: () => handleShowPasswordState(showNewPassword, setShowNewPassword)
@@ -129,7 +132,7 @@ export const UserChangePasswordForm = (props) => {
                 </Box>
                 <Box>
                     {passwordComponent({
-                        label: "Confirm Password"
+                        label: t("confirm.password")
                         , id: "confirm_password"
                         , type: showConfirmPassword ? 'text' : 'password'
                         , iconOnClick: () => handleShowPasswordState(showConfirmPassword, setShowConfirmPassword)
@@ -143,19 +146,19 @@ export const UserChangePasswordForm = (props) => {
             </Stack>
             <DialogActions sx={{p: 2}}>
                 <Button
-                    color="error"
+                    sx={{backgroundColor: themeColor.danger}}
                     variant="contained"
                     onClick={props.closeDialogAction}
                     startIcon={<RestartAltIcon/>}
                     autoFocus
-                >Cancel</Button>
+                >{t("cancel")}</Button>
                 <Button
-                    color="primary"
+                    sx={{backgroundColor: themeColor.primary}}
                     variant="contained"
                     startIcon={<SaveIcon/>}
                     autoFocus
                     type="submit"
-                >Save</Button>
+                >{t("save")}</Button>
             </DialogActions>
         </form>
     )

@@ -33,11 +33,11 @@ export const ApiUser = () => {
 
     const userStatus = {
         USER_INACTIVE: {
-            label: "INACTIVE"
+            label: "inactive"
             , value: 0
         }
         , USER_ACTIVE: {
-            label: "ACTIVE"
+            label: "active"
             , value: 1
         }
     }

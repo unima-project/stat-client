@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/joy/Box';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/joy/Typography';
+import {CommonContext} from "../../App";
 
 export const alertSeverity = {
     SUCCESS: "success"
@@ -17,6 +18,8 @@ export const defaultAlertStatus = {
 
 export const AlertNotification = (props) => {
     const [alertStatus, setAlertStatus] = React.useState(defaultAlertStatus);
+    const {translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         setupAlertStatus();
@@ -51,7 +54,7 @@ export const AlertNotification = (props) => {
             >
                 <div>
                     <Typography level="body-sm" color="white">
-                        {alertStatus.message}
+                        {t(alertStatus.message)}
                     </Typography>
                 </div>
             </Alert>

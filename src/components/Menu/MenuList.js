@@ -12,7 +12,11 @@ import GroupIcon from '@mui/icons-material/Group';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import {Stack} from "@mui/material";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import ListIcon from '@mui/icons-material/List';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import {CommonContext} from "../../App";
+import {RoutePath} from "../../Router";
 
 
 export const MenuList = (props) => {
@@ -21,7 +25,8 @@ export const MenuList = (props) => {
     const [listMenu, setListMenu] = React.useState([]);
     const [userName, setUserName] = React.useState("");
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
-    const {setLoading} = React.useContext(CommonContext);
+    const {translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         if (props.isLogin) {
@@ -34,14 +39,13 @@ export const MenuList = (props) => {
     const handleLogout = () => {
         setConfirmationConfig({
             open: true
-            , title: "Log Out"
+            , title: "log.out"
             , okFunction: logOut
-            , content: "Are you sure want to log out ?"
+            , content: "are.you.sure.want.to.log.out.?"
         });
     }
 
     const logOut = () => {
-        setLoading(true);
         AuthLogout(props.cookie.token)
             .then((data) => {
                 const date = new Date();
@@ -56,7 +60,6 @@ export const MenuList = (props) => {
             })
             .finally(() => {
                 navigate("/");
-                setLoading(false);
             })
     }
 
@@ -68,26 +71,18 @@ export const MenuList = (props) => {
         setAnchorElUser(null);
     };
 
-    const handleProfile = () => {
-        navigate("/users/profiles");
-    };
-
-    const handleUsers = () => {
-        navigate("/users");
-    };
-
-    const handleCorpuses = () => {
-        navigate("/corpuses");
-    };
+    const handlePageNavigation = (path) => {
+        navigate(path)
+    }
 
     const memberSettings = [
         {
-            key: "Profile"
-            , func: handleProfile
+            key: "profile"
+            , func: () => {handlePageNavigation(RoutePath.profiles)}
             , icon: <AccountBoxIcon/>
         },
         {
-            key: "Logout"
+            key: "log.out"
             , func: handleLogout
             , icon: <LogoutIcon/>
         },
@@ -95,14 +90,29 @@ export const MenuList = (props) => {
 
     const adminSetting = [
         {
-            key: "Users"
-            , func: handleUsers
+            key: "member"
+            , func: () => {handlePageNavigation(RoutePath.users)}
             , icon: <GroupIcon/>
         },
         {
-            key: "Corpuses"
-            , func: handleCorpuses
+            key: "corpus"
+            , func: () => {handlePageNavigation(RoutePath.corpuses)}
             , icon: <FormatListBulletedIcon/>
+        },
+        {
+            key: "token"
+            , func: () => {handlePageNavigation(RoutePath.tokens)}
+            , icon: <ListIcon/>
+        },
+        {
+            key: "about"
+            , func: () => {handlePageNavigation(RoutePath.aboutEditor)}
+            , icon: <BorderColorIcon/>
+        },
+        {
+            key: "theme"
+            , func: () => {handlePageNavigation(RoutePath.themes)}
+            , icon: <ColorLensIcon/>
         },
     ]
 
@@ -138,7 +148,7 @@ export const MenuList = (props) => {
             {listMenu.map((setting) => (
                 <MenuItem key={setting.key} onClick={handleCloseUserMenu} hover>
                     <Stack direction={"row"} spacing={2} alignItems={"center"} onClick={setting.func}>
-                        {setting.icon} <Typography>{setting.key}</Typography>
+                        {setting.icon} <Typography>{t(setting.key)}</Typography>
                     </Stack>
                 </MenuItem>
             ))}

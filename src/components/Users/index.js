@@ -20,8 +20,8 @@ import {confirmationConfigDefault, ModalConfirmation} from "../commons/Confirmat
 import {CommonContext} from "../../App";
 
 export const userAction = {
-    INPUT_USER: "Input User"
-    , EDIT_USER: "Update User"
+    INPUT_USER: "input.member"
+    , EDIT_USER: "update.member"
 }
 
 const defaultUserAction = {
@@ -37,7 +37,8 @@ export const User = () => {
     const [action, setAction] = React.useState(defaultUserAction);
     const [modalOpen, setModalOpen] = React.useState(false);
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
-    const {setLoading} = React.useContext(CommonContext);
+    const {setLoading, themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     React.useEffect(() => {
         if (!cookie.token) {
@@ -75,7 +76,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `get user list: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -97,7 +98,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `delete user: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -119,7 +120,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `update user: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -135,13 +136,13 @@ export const User = () => {
                 getUserList();
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}, (email: ${data.data.email}, password: ${data.data.password})`
+                    , message: `${data.message}, (${t('email')}: ${data.data.email}, ${t('password')}: ${data.data.password})`
                 })
             })
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `update user: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -156,13 +157,13 @@ export const User = () => {
             .then(data => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}, (email: ${data.data.email}, new_password: ${data.data.new_password})`
+                    , message: `${data.message}, (${t('email')}: ${data.data.email}, ${t('new.password')}: ${data.data.new_password})`
                 })
             })
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `reset user psssword: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -170,25 +171,23 @@ export const User = () => {
             })
     }
 
-    return (<Box sx={{marginTop: 15}}>
+    return (<Box sx={{marginTop: 15, color: themeColor.primary}}>
         <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>
         <ModalConfirmation confirmationConfig={confirmationConfig}/>
         <Grid container justify="flex-end">
-            <h2>User List</h2>
+            <h2>{t('member.list')}</h2>
             <Button
-                sx={{mb: 2, marginLeft: "auto"}}
+                sx={{mb: 2, marginLeft: "auto", color: themeColor.success}}
                 variant="outlined"
                 component="label"
-                color="success"
                 onClick={() => {
                     handleModalOpen({
-                        title: userAction.INPUT_USER
+                        title: t(userAction.INPUT_USER)
                         , data: defaultUserData
                     });
                 }}
                 startIcon={<PersonAddIcon/>}
-            >New User
-            </Button>
+            >{t('new.member')}</Button>
         </Grid>
         <ModalUser
             modalOpen={modalOpen}

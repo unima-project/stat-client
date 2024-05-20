@@ -3,9 +3,11 @@ import {ApiNltk} from "./Nltk";
 import {ApiAuth} from "./Auth";
 import {ApiCorpus} from "./Corpus";
 import {ApiUser} from "./User";
+import {ApiToken} from "./Token";
+import {ApiAbout} from "./About";
+import {ApiTheme} from "./Theme";
 
-const baseUrl = "https://ankobadasi.et.r.appspot.com";
-//const baseUrl = "http://127.0.0.1:8080";
+const baseUrl = process.env.REACT_APP_SERVER_BACKEND_URL;
 const timeOut = 30000
 
 const axiosInstance = axios.create({
@@ -79,3 +81,20 @@ export const  {
     , defaultUserData
     , userTypeItems
 } = ApiUser();
+
+export const {
+    GetAllTokenList
+    , DeleteToken
+} = ApiToken();
+
+export const {
+    GetAbout
+    , UpdateAbout
+    , AddAbout
+} = ApiAbout();
+
+export const {
+    GetTheme
+    , UpdateTheme
+    , AddTheme
+} = ApiTheme();

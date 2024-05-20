@@ -16,10 +16,13 @@ import Select from "@mui/material/Select";
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import {CommonContext} from "../../App";
-
-const defaultUserList = [{id: 0, name: '--- all user ---'}]
+import Grid from '@mui/material/Unstable_Grid2';
+import {ExportToken} from "../Token/ExportToken";
 
 export const Corpus = (props) => {
+    const {setLoading, translate} = React.useContext(CommonContext);
+    const t = translate.t;
+    const defaultUserList = [{id: 0, name: `--- ${t("all.owner")} ---`}]
     const [corpusList, setCorpusList] = React.useState([]);
     const {cookie} = SetupCookies();
     const [alertStatus, setAlertStatus] = React.useState({
@@ -29,7 +32,6 @@ export const Corpus = (props) => {
     const [userLevel, setUserLevel] = React.useState(userType.USER_MEMBER);
     const [userList, setUserList] = React.useState(defaultUserList)
     const [selectedUser, setSelectedUser] = React.useState(0)
-    const {setLoading} = React.useContext(CommonContext);
 
     React.useEffect(() => {
         setupUserLevel();
@@ -68,7 +70,7 @@ export const Corpus = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -105,7 +107,7 @@ export const Corpus = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -121,7 +123,7 @@ export const Corpus = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
     }
@@ -132,14 +134,14 @@ export const Corpus = (props) => {
             .then(data => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 GetAllCorpus(selectedUser);
             })
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -153,14 +155,14 @@ export const Corpus = (props) => {
             .then(data => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 GetAllCorpus(selectedUser)
             })
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -174,13 +176,12 @@ export const Corpus = (props) => {
         GetAllCorpus(event.target.value);
     }
 
-    const selectUser = <Box sx={{maxWidth: 250, textAlign: "left", marginBottom: 3}}>
-        <FormControl fullWidth>
-            <InputLabel>User</InputLabel>
+    const selectUser = <FormControl sx={{minWidth: 175}}>
+            <InputLabel>{t('owner')}</InputLabel>
             <Select
                 size={"small"}
                 value={selectedUser}
-                label="User"
+                label={t('owner')}
                 onChange={userOnChange}
             >
                 {
@@ -190,10 +191,20 @@ export const Corpus = (props) => {
                 }
             </Select>
         </FormControl>
+
+    const headerComponents = <Box marginBottom={2}>
+        <Grid container>
+            <Grid container sx={{width: '50%'}} justifyContent={"left"}>
+                {isAdmin ? selectUser : <></>}
+            </Grid>
+            <Grid container sx={{width: '50%'}} justifyContent={"flex-end"}>
+                {!isAdmin ? <ExportToken setAlertStatus={setAlertStatus}/> : <></>}
+            </Grid>
+        </Grid>
     </Box>
 
-    return (<Box>
-        {isAdmin ? selectUser : <></>}
+    return (<Grid>
+        {headerComponents}
         <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>
         <CorpusList
             corpusListMemo={corpusListMemo}
@@ -204,5 +215,5 @@ export const Corpus = (props) => {
             updateCurrentCorpus={UpdateCurrentCorpus}
             userLevel={userLevel}
         />
-    </Box>);
+    </Grid>);
 }

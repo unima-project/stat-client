@@ -11,6 +11,7 @@ import {GetTokenList, LoadCorpus, LoadPublicCorpus} from "../../models";
 import {SetupCookies} from "../../Helpers/cookie";
 import List from "../../Helpers/list";
 import {CommonContext} from "../../App";
+import {exportTxt} from "../../Helpers/download";
 
 export const Tool = () => {
     const [tokens, setTokens] = React.useState([]);
@@ -22,7 +23,8 @@ export const Tool = () => {
     const {isMember, isLogin} = UserProfile();
     const {cookie} = SetupCookies();
     const [text, setText] = React.useState("");
-    const {setLoading} = React.useContext(CommonContext);
+    const {setLoading, themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
     const isMemberMemo = React.useMemo(() => {
         return isMember
@@ -50,7 +52,7 @@ export const Tool = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `load corpus: ${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -67,7 +69,7 @@ export const Tool = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `load corpus: ${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -78,15 +80,11 @@ export const Tool = () => {
     const exportToken = (tokens) => {
         const uniqueToken = new List(tokens)
             .RemoveDuplicateItemList()
+            .SortAsc()
             .SetNumbering()
+            .list
 
-        const blob = new Blob([uniqueToken.list], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.download = "token.txt";
-        link.href = url;
-        link.click();
+        exportTxt(uniqueToken, "token");
     }
 
     const loadCurrentCorpus = (corpusId, isDownload, userId) => {
@@ -111,7 +109,7 @@ export const Tool = () => {
         } catch (error) {
             setAlertStatus({
                 severity: alertSeverity.ERROR
-                , message: `get token list: ${error}`
+                , message: error
             })
             errorState();
         }
@@ -129,7 +127,7 @@ export const Tool = () => {
                         fontWeight: 700,
                     }}
                 >
-                    {isMemberMemo ?  "Simple Text Analysis Tool" : "Corpus List"}
+                    <Box sx={{marginTop: 3, color: themeColor.primary}}>{isMemberMemo ?  t("corpus.analysis") : t("corpus.list")}</Box>
                 </Typography>
                 {
                     isMemberMemo ?

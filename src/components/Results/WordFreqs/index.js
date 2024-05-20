@@ -20,7 +20,7 @@ const WordFreq = (props) => {
             .catch(error => {
                 props.setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `get word frequency: ${error}`
+                    , message: error
                 })
             })
     }

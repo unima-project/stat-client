@@ -7,15 +7,17 @@ import {ModalCorpus} from "./ModalCorpus";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import {CommonContext} from "../../App";
 
 export const InputController = (props) => {
+    const {themeColor} = React.useContext(CommonContext);
 
     const handleSaveCorpus = () => {
         props.setConfirmationConfig({
             open: true
-            , title: "Save Corpus"
+            , title: "save.corpus"
             , okFunction: props.saveCorpus
-            , content: `Are you sure want to save the corpus ?`
+            , content: "are.you.sure.want.to.save.the.corpus.?"
         });
     }
 
@@ -32,20 +34,18 @@ export const InputController = (props) => {
         <Box>
             <Stack direction="row" spacing={1}>
                 <Button
-                    color="primary"
                     size="small"
                     variant="contained"
                     onClick={() => props.handleReveal(props.text)}
                     startIcon={<VisibilityIcon/>}
-                    sx={{minWidth: 110}}
+                    sx={{minWidth: 110, backgroundColor: themeColor.primary}}
                 >Reveal</Button>
                 <Button
-                    color="info"
                     size="small"
                     variant="contained"
                     component="label"
                     startIcon={<CloudUploadIcon/>}
-                    sx={{minWidth: 110}}
+                    sx={{minWidth: 110, backgroundColor: themeColor.info}}
                 >Upload
                     {
                         props.fileName === "" ?
@@ -59,7 +59,6 @@ export const InputController = (props) => {
                 </Button>
                 <Button
                     size="small"
-                    color="error"
                     variant="contained"
                     onClick={() => {
                         props.errorState();
@@ -71,7 +70,7 @@ export const InputController = (props) => {
                         props.setSaveStatus(false);
                     }}
                     startIcon={<RestartAltIcon/>}
-                    sx={{minWidth: 110}}
+                    sx={{minWidth: 110, backgroundColor: themeColor.danger}}
                 >Reset</Button>
                 {
                     props.isMember ?
@@ -84,11 +83,10 @@ export const InputController = (props) => {
                                 props.saveStatus && props.text !== "" ?
                                     <Button
                                         size="small"
-                                        color="secondary"
                                         variant="contained"
                                         onClick={handleSaveCorpus}
                                         startIcon={<SaveIcon/>}
-                                        sx={{minWidth: 110}}
+                                        sx={{minWidth: 110, backgroundColor: themeColor.secondary}}
                                     >Save</Button>
                                     : <></>
                             }

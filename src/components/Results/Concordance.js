@@ -36,7 +36,7 @@ const Concordance = (props) => {
             .catch(error => {
                 props.setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `setup concordance list: ${error}`
+                    , message: error
                 })
             })
     };

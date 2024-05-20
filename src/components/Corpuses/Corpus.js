@@ -1,81 +1,56 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DownloadIcon from '@mui/icons-material/Download';
 import {Button, Stack} from "@mui/material";
 import Switch from "@mui/material/Switch";
-import {corpusPublicStatusConfig, userType} from "../../models";
+import {userType} from "../../models";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CorpusConfig from "./Config";
-
-const rowsPerPageOptions = [5, 10, 25, 50];
+import {CommonTable} from "../commons/Table"
+import {CommonContext} from "../../App";
 
 export const CorpusList = (props) => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
-    const [rows, setRows] = React.useState([]);
-    const [columns, setColumns] = React.useState([]);
+    const {dataTable, setupColumn, setRows} = CommonTable();
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
+
+    const columnsConfig = {
+        ID: {id: 'id', label: 'id', minWidth: 10, visible: true}
+        , USER: {id: 'user', label: 'owner', minWidth: 50, visible: true}
+        , CORPUS: {id: 'corpus', label: 'corpus', minWidth: 50, visible: true}
+        , PUBLIC: {id: 'public', label: 'public', minWidth: 10, visible: true}
+        , CREATED_AT: {id: 'created_at', label: 'created.at', minWidth: 10, visible: true}
+        , ACTION: {id: 'action', label: '', minWidth: 10, visible: true}
+    }
 
     React.useEffect(() => {
         setRowData();
         setupCurrentColumn();
     }, [props.corpusListMemo, props.userLevel])
 
-    const columnsCallback = React.useMemo(() => {
-        return columns
-    }, [columns])
-
     const setupCurrentColumn = () => {
-        const config = new CorpusConfig(props.userLevel)
+        const config = new CorpusConfig(props.userLevel, columnsConfig);
         setupColumn(config.SetColumns().columns);
-    }
-
-    const setupColumn = (cols) => {
-        const columnList = [];
-
-        for (const col in cols) {
-            columnList.push({
-                id: cols[col].id
-                , label: cols[col].label
-                , minWidth: cols[col].minWidth
-                , visible: cols[col].visible
-            })
-        }
-
-        setupVisibleColumns(columnList);
-    }
-
-    const setupVisibleColumns = (columnList) => {
-        setColumns(columnList.filter((column) => {
-            return column.visible === true
-        }))
     }
 
     const handleDeleteCorpus = (corpusId) => {
         props.setConfirmationConfig({
             open: true
-            , title: "Delete Corpus"
+            , title: "delete.corpus"
             , okFunction: () => props.deleteCurrentCorpus(corpusId)
-            , content: `Are you sure want to delete the corpus ?`
+            , content: 'are.you.sure.want.to.delete.the.corpus.?'
         });
     }
 
     const handleLoadCorpus = (corpusId, isDownload, userId) => {
-        let content = `Are you sure want to load the corpus ?`
+        let content = 'are.you.sure.want.to.load.the.corpus.?'
         if (isDownload) {
-            content = `Are you sure want to download the token list ?`
+            content = 'are.you.sure.want.to.download.the.token.list.?'
         }
 
         props.setConfirmationConfig({
             open: true
-            , title: "Load Corpus"
+            , title: isDownload ? "download.corpus" : "load.corpus"
             , okFunction: () => {
                 props.loadCurrentCorpus(corpusId, isDownload, userId);
                 if (props.isMember) {
@@ -87,15 +62,14 @@ export const CorpusList = (props) => {
     }
 
     const publicOnChange = (event, corpus) => {
-        const checked = event.target.checked ? 1 : 0;
-        corpus.public = checked;
+        corpus.public = event.target.checked ? 1 : 0;
         props.setConfirmationConfig({
             open: true
-            , title: "Update Corpus"
+            , title: "update.corpus"
             , okFunction: () => {
                 props.updateCurrentCorpus(corpus);
             }
-            , content: `Are you sure want to set ${corpusPublicStatusConfig[checked].label} ?`
+            , content: "are.you.sure.want.to.update.this.member.?"
         });
     }
 
@@ -104,7 +78,7 @@ export const CorpusList = (props) => {
             size="small"
             variant="outlined"
             component="label"
-            color={prop.color}
+            sx={{color: prop.color}}
             onClick={prop.action}
             key={prop.key}
         >{prop.icon}</Button>
@@ -112,7 +86,7 @@ export const CorpusList = (props) => {
 
     const deleteCorpusButton = (corpusId) => {
         return actionButton({
-            color: "error"
+            color: themeColor.danger
             , action: () => handleDeleteCorpus(corpusId)
             , icon: <DeleteForeverIcon/>
             , key: 1,
@@ -121,7 +95,7 @@ export const CorpusList = (props) => {
 
     const loadCorpusButton = (corpusId, userId) => {
         return actionButton({
-            color: "primary"
+            color: themeColor.primary
             , action: () => handleLoadCorpus(corpusId, false, userId)
             , icon: <VisibilityIcon/>
             , key: 2,
@@ -130,7 +104,7 @@ export const CorpusList = (props) => {
 
     const printCorpusTokenButton = (corpusId, userId) => {
         return actionButton({
-            color: "success"
+            color: themeColor.success
             , action: () => handleLoadCorpus(corpusId, true, userId)
             , icon: <DownloadIcon/>
             , key: 3,
@@ -184,64 +158,5 @@ export const CorpusList = (props) => {
         }));
     }
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
-    return (
-        <Paper sx={{width: '100%', overflow: 'hidden'}}>
-            <TableContainer sx={{maxHeight: 440}}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columnsCallback.map((column) => {
-                                return (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{minWidth: column.minWidth, backgroundColor: "#378CE7", color: "white"}}
-                                    >{column.label}</TableCell>
-                                );
-                            })}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                        {columnsCallback.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
-                                );
-                            })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={rowsPerPageOptions}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-        </Paper>
-    )
-        ;
+    return (<>{dataTable}</>)
 }

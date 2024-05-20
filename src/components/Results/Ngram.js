@@ -66,7 +66,7 @@ const Ngram = (props) => {
             .catch(error => {
                 props.setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `setup ngram list: ${error}`
+                    , message: error
                 })
             })
     };

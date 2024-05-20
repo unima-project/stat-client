@@ -5,7 +5,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from "react-router-dom";
 import {SetupCookies} from '../../Helpers/cookie';
 import {MenuList} from "./MenuList";
@@ -13,25 +12,30 @@ import {UserProfile} from "../../Helpers/userProfile";
 import HomeIcon from '@mui/icons-material/Home';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import {CommonContext} from "../../App";
+import {Translations} from "../Translations";
 
 export const MainMenu = () => {
     const {cookie, removeCookie} = SetupCookies();
     const {isAdmin, isLogin} = UserProfile();
+    const {themeColor, translate} = React.useContext(CommonContext);
+    const t = translate.t;
 
-    React.useEffect(() => {},[isAdmin, isLogin, cookie]);
+    React.useEffect(() => {
+    },[isAdmin, isLogin, cookie]);
 
     const homeMenu = <>
         <Link to={'/'}>
             <Button
                 sx={{my: 2, color: 'white'}}
                 startIcon={<HomeIcon/>}
-            >Home</Button>
+            >{t('about')}</Button>
         </Link>
         <Link to={'/tools'}>
             <Button
                 sx={{my: 2, color: 'white'}}
                 startIcon={<QueryStatsIcon/>}
-            >Tool</Button>
+            >{t('corpus.analysis')}</Button>
         </Link>
     </>
 
@@ -44,10 +48,10 @@ export const MainMenu = () => {
     }
 
     return (
-        <AppBar position="fixed">
+        <AppBar position="fixed" sx={{backgroundColor: themeColor.primary}}>
             <Container>
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
+                    <Translations />
                     <Typography
                         variant="h6"
                         noWrap
@@ -56,12 +60,12 @@ export const MainMenu = () => {
                             display: {xs: 'none', md: 'flex'},
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            letterSpacing: '.2rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        STAT
+                        {process.env.REACT_APP_TITLE}
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {setupHomeMenu()}
@@ -78,7 +82,7 @@ export const MainMenu = () => {
                                 <Button
                                     sx={{my: 2, color: 'white'}}
                                     endIcon={<VpnKeyIcon/>}
-                                >Login</Button>
+                                >{t('login')}</Button>
                             </Link>
                     }
                 </Toolbar>
