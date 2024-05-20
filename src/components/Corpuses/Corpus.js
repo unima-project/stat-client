@@ -36,21 +36,21 @@ export const CorpusList = (props) => {
     const handleDeleteCorpus = (corpusId) => {
         props.setConfirmationConfig({
             open: true
-            , title: t("delete.corpus")
+            , title: "delete.corpus"
             , okFunction: () => props.deleteCurrentCorpus(corpusId)
-            , content: t('are.you.sure.want.to.delete.the.corpus.?')
+            , content: 'are.you.sure.want.to.delete.the.corpus.?'
         });
     }
 
     const handleLoadCorpus = (corpusId, isDownload, userId) => {
-        let content = t('are.you.sure.want.to.load.the.corpus.?')
+        let content = 'are.you.sure.want.to.load.the.corpus.?'
         if (isDownload) {
-            content = t('are.you.sure.want.to.download.the.token.list.?')
+            content = 'are.you.sure.want.to.download.the.token.list.?'
         }
 
         props.setConfirmationConfig({
             open: true
-            , title: isDownload ? t("download.corpus") : t("load.corpus")
+            , title: isDownload ? "download.corpus" : "load.corpus"
             , okFunction: () => {
                 props.loadCurrentCorpus(corpusId, isDownload, userId);
                 if (props.isMember) {
@@ -65,11 +65,11 @@ export const CorpusList = (props) => {
         corpus.public = event.target.checked ? 1 : 0;
         props.setConfirmationConfig({
             open: true
-            , title: t("update.corpus")
+            , title: "update.corpus"
             , okFunction: () => {
                 props.updateCurrentCorpus(corpus);
             }
-            , content: t("are.you.sure.want.to.update.this.member.?")
+            , content: "are.you.sure.want.to.update.this.member.?"
         });
     }
 

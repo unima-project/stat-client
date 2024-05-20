@@ -15,9 +15,9 @@ export const InputController = (props) => {
     const handleSaveCorpus = () => {
         props.setConfirmationConfig({
             open: true
-            , title: "Save Corpus"
+            , title: "save.corpus"
             , okFunction: props.saveCorpus
-            , content: `Are you sure want to save the corpus ?`
+            , content: "are.you.sure.want.to.save.the.corpus.?"
         });
     }
 

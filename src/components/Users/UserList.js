@@ -50,22 +50,22 @@ export const UserList = (props) => {
         user.user_type = event.target.value;
         props.setConfirmationConfig({
             open: true
-            , title: t("update.member")
+            , title: "update.member"
             , okFunction: () => {
                 props.updateUser(user);
             }
-            , content: t("are.you.sure.want.to.update.this.member.?")
+            , content: "are.you.sure.want.to.update.this.member.?"
         });
     }
     const statusOnChange = (event, user) => {
         user.status = event.target.checked ? 1 : 0;
         props.setConfirmationConfig({
             open: true
-            , title: t("update.member")
+            , title: "update.member"
             , okFunction: () => {
                 props.updateUser(user);
             }
-            , content: t("are.you.sure.want.to.update.this.member.?")
+            , content: "are.you.sure.want.to.update.this.member.?"
         });
     }
 
@@ -145,11 +145,11 @@ export const UserList = (props) => {
     const handleDelete = (userId, userName) => {
         props.setConfirmationConfig({
             open: true
-            , title: t("delete.member")
+            , title: "delete.member"
             , okFunction: () => {
                 props.deleteUser(userId)
             }
-            , content: t("are.you.sure.want.to.delete.this.user.?")
+            , content: "are.you.sure.want.to.delete.this.user.?"
         })
     }
 

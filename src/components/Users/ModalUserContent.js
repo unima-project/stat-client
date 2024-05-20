@@ -64,7 +64,7 @@ export const ModalUserContent = (props) => {
                     ? props.createUser(props.userData)
                     : props.updateUser(props.userData)
             }
-            , content: t("are.you.sure.want.to.update./.add.member.?")
+            , content: "are.you.sure.want.to.update./.add.member.?"
         });
     }
 
@@ -73,7 +73,7 @@ export const ModalUserContent = (props) => {
             open: true
             , title: props.action.title
             , okFunction: () => props.resetUserPassword(props.userData.id)
-            , content: t("are.you.sure.want.to.reset.${props.userData.name}.password.?")
+            , content: "are.you.sure.want.to.reset.${props.userData.name}.password.?"
         });
     }
 

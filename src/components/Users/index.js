@@ -76,7 +76,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${t("get.user.list")}: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -98,7 +98,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${t("delete.user")}: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -120,7 +120,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${t("update.user")}: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -142,7 +142,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${t("update.user")}: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -163,7 +163,7 @@ export const User = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${t('reset.user.password')}: ${error}`
+                    , message: error
                 })
             })
             .finally(() =>{
@@ -175,7 +175,7 @@ export const User = () => {
         <AlertNotification alertStatus={alertStatus} setAlertStatus={setAlertStatus}/>
         <ModalConfirmation confirmationConfig={confirmationConfig}/>
         <Grid container justify="flex-end">
-            <h2>{t('user.list')}</h2>
+            <h2>{t('member.list')}</h2>
             <Button
                 sx={{mb: 2, marginLeft: "auto", color: themeColor.success}}
                 variant="outlined"

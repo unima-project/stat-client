@@ -50,7 +50,7 @@ export const UserChangePasswordForm = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${t('change.member.password')}: ${error}`
+                    , message: `change.member.password: ${error}`
                 })
             })
     }
@@ -58,7 +58,7 @@ export const UserChangePasswordForm = (props) => {
     const handleConfirmPassword = (confirmPassword) => {
         if (!validatePassword(confirmPassword)) {
             setAlertStatus({
-                message: t("password.is.not.match")
+                message: "password.is.not.match"
                 , severity: alertSeverity.ERROR
             });
             return false
@@ -77,9 +77,9 @@ export const UserChangePasswordForm = (props) => {
         if (handleConfirmPassword(dataPassword.confirm_password)) {
             props.setConfirmationConfig({
                 open: true
-                , title: t("change.password")
+                , title: "change.password"
                 , okFunction: () => changeUserPassword(dataPassword)
-                , content: t("are.you.sure.want.to.change.password.?")
+                , content: "are.you.sure.want.to.change.password.?"
             });
         }
     }

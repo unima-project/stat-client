@@ -53,7 +53,7 @@ const Collocate = (props) => {
             .catch(error => {
                 props.setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `setup collocation list: ${error}`
+                    , message: error
                 })
             })
     };

@@ -22,13 +22,13 @@ const MainController = (props) => {
             .then(data => {
                 props.setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `save corpus: ${data.message}`
+                    , message: data.message
                 })
             })
             .catch(error => {
                 props.setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `save corpus: ${error}`
+                    , message: error
                 })
             })
             .finally(() => {

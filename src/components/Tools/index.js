@@ -52,7 +52,7 @@ export const Tool = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `load corpus: ${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -69,7 +69,7 @@ export const Tool = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `load corpus: ${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -109,7 +109,7 @@ export const Tool = () => {
         } catch (error) {
             setAlertStatus({
                 severity: alertSeverity.ERROR
-                , message: `get token list: ${error}`
+                , message: error
             })
             errorState();
         }

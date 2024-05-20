@@ -37,7 +37,7 @@ export const UserProfile = () => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${t("get.user.profile")}: ${error}`
+                    , message: error
                 })
             })
             .finally(() => {

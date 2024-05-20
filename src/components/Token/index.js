@@ -49,14 +49,14 @@ export const Token = (props) => {
             .then(data => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 GetTokenList();
             })
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {

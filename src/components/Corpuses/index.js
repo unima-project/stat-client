@@ -70,7 +70,7 @@ export const Corpus = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -107,7 +107,7 @@ export const Corpus = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -123,7 +123,7 @@ export const Corpus = (props) => {
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
     }
@@ -134,14 +134,14 @@ export const Corpus = (props) => {
             .then(data => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 GetAllCorpus(selectedUser);
             })
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {
@@ -155,14 +155,14 @@ export const Corpus = (props) => {
             .then(data => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 GetAllCorpus(selectedUser)
             })
             .catch(error => {
                 setAlertStatus({
                     severity: alertSeverity.ERROR
-                    , message: `${error}`
+                    , message: error
                 })
             })
             .finally(() => {

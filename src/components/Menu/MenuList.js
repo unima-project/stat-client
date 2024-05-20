@@ -39,9 +39,9 @@ export const MenuList = (props) => {
     const handleLogout = () => {
         setConfirmationConfig({
             open: true
-            , title: t("log.out")
+            , title: "log.out"
             , okFunction: logOut
-            , content: t("are.you.sure.want.to.log.out.?")
+            , content: "are.you.sure.want.to.log.out.?"
         });
     }
 

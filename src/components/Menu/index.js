@@ -13,17 +13,12 @@ import HomeIcon from '@mui/icons-material/Home';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import {CommonContext} from "../../App";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import {Stack} from "@mui/material";
-import In from "../../config/translations/in.json";
-import En from "../../config/translations/en.json";
+import {Translations} from "../Translations";
 
 export const MainMenu = () => {
     const {cookie, removeCookie} = SetupCookies();
     const {isAdmin, isLogin} = UserProfile();
-    const {themeColor, translate, setupTranslate} = React.useContext(CommonContext);
+    const {themeColor, translate} = React.useContext(CommonContext);
     const t = translate.t;
 
     React.useEffect(() => {
@@ -52,40 +47,11 @@ export const MainMenu = () => {
         }
     }
 
-    const langItems = [
-        {value: In, label: "IN"}
-        , {value: En, label: "EN"}
-    ];
-
-    const langOnChange = (e) => {
-        setupTranslate(e.target.value);
-    }
-
-    const langControl = <FormControl sx={{marginRight: 3}} size="small">
-                <Select
-                    value={translate.source}
-                    onChange={langOnChange}
-                    sx={{backgroundColor: 'white'}}
-                >
-                    {
-                        langItems.map((item, index) => {
-                            return (
-                                <MenuItem value={item.value} key={index}>
-                                    <Stack direction="row" spacing={1} alignItems={"center"}>
-                                        {/*<Typography>{item.icon(16)}</Typography>*/}
-                                        <Typography fontSize="10pt">{item.label}</Typography>
-                                    </Stack>
-                                </MenuItem>)
-                        })
-                    }
-                </Select>
-            </FormControl>
-
     return (
         <AppBar position="fixed" sx={{backgroundColor: themeColor.primary}}>
             <Container>
                 <Toolbar disableGutters>
-                    {langControl}
+                    <Translations />
                     <Typography
                         variant="h6"
                         noWrap

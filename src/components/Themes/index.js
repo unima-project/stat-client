@@ -68,7 +68,7 @@ export const Themes = () => {
             .then((data) => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 getTheme();
             })
@@ -89,7 +89,7 @@ export const Themes = () => {
             .then((data) => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 getTheme();
             })
@@ -179,7 +179,7 @@ export const Themes = () => {
         if (color === null || color === undefined || color === '') {
             setAlertStatus({
                 severity: severity.ERROR
-                , message: `${t('color.required')} !!`
+                , message: 'color.required !!'
             })
 
             return
@@ -187,18 +187,18 @@ export const Themes = () => {
 
         setConfirmationConfig({
             open: true
-            , title: t("add./.update.theme.color")
+            , title: "add./.update.theme.color"
             , okFunction: () => addUpdateCallback(color, token)
-            , content: t("are.you.sure.want.to.add./.update.theme.?")
+            , content: "are.you.sure.want.to.add./.update.theme.?"
         });
     }
 
     const handleResetTheme = () => {
         setConfirmationConfig({
             open: true
-            , title: t("reset.theme.color")
+            , title: "reset.theme.color"
             , okFunction: () => getTheme()
-            , content: t("are.you.sure.want.to.reset.theme.color.?")
+            , content: "are.you.sure.want.to.reset.theme.color.?"
         });
     }
 

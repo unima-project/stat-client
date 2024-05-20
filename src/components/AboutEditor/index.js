@@ -64,7 +64,7 @@ export const AboutEditor = () => {
             .then((data) => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 getAbout();
             })
@@ -86,7 +86,7 @@ export const AboutEditor = () => {
             .then((data) => {
                 setAlertStatus({
                     severity: alertSeverity.SUCCESS
-                    , message: `${data.message}`
+                    , message: data.message
                 })
                 getAbout();
             })
@@ -106,7 +106,7 @@ export const AboutEditor = () => {
         if (content === null || content === undefined || content === '') {
             setAlertStatus({
                 severity: severity.ERROR
-                , message: `${t('content.required')} !!`
+                , message: "content.required !!"
             })
 
             return
@@ -114,9 +114,9 @@ export const AboutEditor = () => {
 
         setConfirmationConfig({
             open: true
-            , title: t("add./.update.about.content")
+            , title: "add./.update.about.content"
             , okFunction: () => addUpdateCallback(content, token)
-            , content: t("are.you.sure.want.to.add./.update.about.?")
+            , content: "are.you.sure.want.to.add./.update.about.?"
         });
     }
 

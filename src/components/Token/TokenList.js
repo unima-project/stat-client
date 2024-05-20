@@ -45,9 +45,9 @@ export const TokenList = (props) => {
     const handleDeleteToken = (tokenId) => {
         props.setConfirmationConfig({
             open: true
-            , title: t("delete.token")
+            , title: "delete.token"
             , okFunction: () => props.deleteCurrentToken(tokenId)
-            , content: t("are.you.sure.want.to.delete.the.token.?")
+            , content: "are.you.sure.want.to.delete.the.token.?"
         });
     }
 

@@ -76,4 +76,6 @@
   , "are.you.sure.want.to.change.password.?": "Apakah anda ingin mengganti kata sandi ?"
   , "old.Password": "Kata sandi lama"
   , "confirm.password": "Konfirmasi kata sandi"
+  , "save.corpus": "Simpan korpus"
+  , "are.you.sure.want.to.save.the.corpus.?": "Apakah anda mau menyimpan korpus ini ?"
 }

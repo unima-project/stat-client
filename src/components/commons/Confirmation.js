@@ -12,7 +12,8 @@ import {CommonContext} from "../../App";
 export const confirmationConfigDefault = {
     open: false
     , title: ""
-    , okFunction: () => {}
+    , okFunction: () => {
+    }
     , content: ""
 }
 
@@ -20,7 +21,7 @@ export const ModalConfirmation = (props) => {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [confirmationConfig, setConfirmationConfig] = React.useState(confirmationConfigDefault);
-    const {translate} = React.useContext(CommonContext);
+    const {translate, themeColor} = React.useContext(CommonContext);
     const t = translate.t;
 
     React.useEffect(() => {
@@ -53,18 +54,26 @@ export const ModalConfirmation = (props) => {
                 maxWidth={"md"}
             >
                 <DialogTitle id="responsive-dialog-title">
-                    {confirmationConfig.title}
+                    {t(confirmationConfig.title)}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {confirmationConfig.content}
+                        {t(confirmationConfig.content)}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleCancel}>
+                    <Button
+                        variant={"contained"}
+                        sx={{backgroundColor: themeColor.danger}}
+                        autoFocus onClick={handleCancel}
+                    >
                         {t('cancel')}
                     </Button>
-                    <Button onClick={handleOk} autoFocus>
+                    <Button
+                        variant={"contained"}
+                        sx={{backgroundColor: themeColor.success}}
+                        onClick={handleOk} autoFocus
+                    >
                         {t('ok')}
                     </Button>
                 </DialogActions>
