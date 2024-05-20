@@ -182,7 +182,7 @@ export const User = () => {
                 component="label"
                 onClick={() => {
                     handleModalOpen({
-                        title: t(userAction.INPUT_USER)
+                        title: userAction.INPUT_USER
                         , data: defaultUserData
                     });
                 }}

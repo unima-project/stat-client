@@ -141,7 +141,7 @@ export const ModalUserContent = (props) => {
                             </Grid>
                             <Grid xs={8}>
                                 {
-                                    props.action.title === userAction.EDIT_USER
+                                    props.action.title === t(userAction.EDIT_USER)
                                         ? <Button
                                             size="small"
                                             sx={{p: 1, backgroundColor: themeColor.warning}}
